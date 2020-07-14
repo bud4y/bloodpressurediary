@@ -1,4 +1,4 @@
-package edu.progmatic.blood_presssure_diary.Model;
+package edu.progmatic.blood_presssure_diary.models;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
