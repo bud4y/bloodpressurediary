@@ -1,4 +1,8 @@
-package edu.progmatic.blood_presssure_diary.models;
+package edu.progmatic.blood_presssure_diary.models.measurement;
+
+import edu.progmatic.blood_presssure_diary.models.evaluation.Advice;
+import edu.progmatic.blood_presssure_diary.models.evaluation.WeatherData;
+import edu.progmatic.blood_presssure_diary.models.registration.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;

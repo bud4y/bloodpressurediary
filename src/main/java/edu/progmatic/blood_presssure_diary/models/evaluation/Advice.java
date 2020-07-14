@@ -1,4 +1,4 @@
-package edu.progmatic.blood_presssure_diary.models;
+package edu.progmatic.blood_presssure_diary.models.evaluation;
 
 import javax.persistence.*;
 
