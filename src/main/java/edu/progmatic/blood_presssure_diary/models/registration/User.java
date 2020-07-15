@@ -23,9 +23,9 @@ public class User implements UserDetails {
     @Id
     private Long id;
     private boolean isMale;
-    private double weight;
-    private double height;
-    private double BMI;
+    private Double weight;
+    private Double height;
+    private Double BMI;
     @OneToMany
     List<MeasurementDetails> measurements;
     @OneToOne
@@ -148,27 +148,27 @@ public class User implements UserDetails {
         isMale = male;
     }
 
-    public double getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 
-    public double getHeight() {
+    public Double getHeight() {
         return height;
     }
 
-    public void setHeight(double height) {
+    public void setHeight(Double height) {
         this.height = height;
     }
 
-    public double getBMI() {
+    public Double getBMI() {
         return BMI;
     }
 
-    public void setBMI(double BMI) {
+    public void setBMI(Double BMI) {
         this.BMI = BMI;
     }
 
@@ -194,5 +194,25 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", birthDate=" + birthDate +
+                ", email='" + email + '\'' +
+                ", id=" + id +
+                ", isMale=" + isMale +
+                ", weight=" + weight +
+                ", height=" + height +
+                ", BMI=" + BMI +
+                ", measurements=" + measurements +
+                ", role=" + role +
+                ", roles=" + roles +
+                '}';
     }
 }
