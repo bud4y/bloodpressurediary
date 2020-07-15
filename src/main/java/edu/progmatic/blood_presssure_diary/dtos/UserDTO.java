@@ -24,7 +24,6 @@ public class UserDTO {
     @ValidPassword
     private String passwordConfirmation;
     @NotNull
-    @DateTimeFormat(pattern = DateFormats.DATE_FORMAT)
     private LocalDate birthDate;
     @NotEmpty
     private String email;
@@ -34,6 +33,19 @@ public class UserDTO {
     private double weight;
     @NotEmpty
     private double height;
+
+    public UserDTO(@Size(min = 3, max = 20) @NotEmpty String username, @Size(min = 3, max = 20) @NotEmpty String firstName, @Size(min = 3, max = 20) @NotEmpty String lastName, String password, String passwordConfirmation, @NotNull LocalDate birthDate, @NotEmpty String email, @NotNull boolean isMale, @NotEmpty double weight, @NotEmpty double height) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.passwordConfirmation = passwordConfirmation;
+        this.birthDate = birthDate;
+        this.email = email;
+        this.isMale = isMale;
+        this.weight = weight;
+        this.height = height;
+    }
 
     public String getUsername() {
         return username;

@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    private static final String[] PUBLIC_MATCHERS = {"/user/login", "/user/register"};
     @Autowired
     private UserService userService;
     @Bean
@@ -38,20 +39,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .formLogin()
-                .loginPage("/registration")
-                .permitAll()
-                .defaultSuccessUrl("/home")
-                .and()
-                .logout()
-                .logoutSuccessUrl("/login")
-                .and()
-                .authorizeRequests()
-                .antMatchers( "/home", "/exception", "/webjars/**", "/registration", "/css/**", "/", "/rest/csrf")
-                .permitAll()
-                .anyRequest().authenticated()
+        http.csrf().disable().cors().disable().authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll()
+        .anyRequest().authenticated()
         ;
+
     }
 
 }

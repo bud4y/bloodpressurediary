@@ -48,7 +48,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void createNewUser(UserDTO userDTO) {
+    public User createNewUser(UserDTO userDTO) {
         User user = new User(userDTO.getFirstName(), userDTO.getLastName(), bCryptPasswordEncoder.encode(userDTO.getPassword()),
                 userDTO.getBirthDate(), userDTO.getEmail(), userDTO.isMale(), userDTO.getWeight(), userDTO.getHeight(), 0,
                 new ArrayList<>(), userDTO.getUsername());
@@ -61,6 +61,7 @@ public class UserService implements UserDetailsService {
         user.setRoles(roles);
         logger.info(user+" service adatok");
         entityManager.persist(user);
+        return user;
     }
 
     @Override
