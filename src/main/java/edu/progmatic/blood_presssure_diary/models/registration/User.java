@@ -30,8 +30,6 @@ public class User implements UserDetails {
     private Double BMI;
     @OneToMany
     List<MeasurementDetails> measurements;
-    @OneToOne
-    Role role;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
@@ -182,14 +180,6 @@ public class User implements UserDetails {
         this.measurements = measurements;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
     public Set<Role> getRoles() {
         return roles;
     }
@@ -213,7 +203,6 @@ public class User implements UserDetails {
                 ", height=" + height +
                 ", BMI=" + BMI +
                 ", measurements=" + measurements +
-                ", role=" + role +
                 ", roles=" + roles +
                 '}';
     }
