@@ -1,9 +1,8 @@
 package edu.progmatic.blood_presssure_diary.dtos;
 
-import edu.progmatic.blood_presssure_diary.constants.DateFormats;
 import edu.progmatic.blood_presssure_diary.validators.password.ValidPassword;
-import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -11,13 +10,13 @@ import java.time.LocalDate;
 
 public class UserDTO {
     @Size(min = 3, max = 20)
-    @NotEmpty
+    @NotNull
     private String username;
     @Size(min = 3, max = 20)
-    @NotEmpty
+    @NotNull
     private String firstName;
     @Size(min = 3, max = 20)
-    @NotEmpty
+    @NotNull
     private String lastName;
     @ValidPassword
     private String password;
@@ -25,16 +24,14 @@ public class UserDTO {
     private String passwordConfirmation;
     @NotNull
     private LocalDate birthDate;
-    @NotEmpty
     private String email;
+    private @NotNull Boolean isMale;
     @NotNull
-    private boolean isMale;
-    @NotEmpty
-    private double weight;
-    @NotEmpty
-    private double height;
+    private  Double weight;
+    @NotNull
+    private  Double height;
 
-    public UserDTO(@Size(min = 3, max = 20) @NotEmpty String username, @Size(min = 3, max = 20) @NotEmpty String firstName, @Size(min = 3, max = 20) @NotEmpty String lastName, String password, String passwordConfirmation, @NotNull LocalDate birthDate, @NotEmpty String email, @NotNull boolean isMale, @NotEmpty double weight, @NotEmpty double height) {
+    public UserDTO(@Size(min = 3, max = 20) @NotNull String username, @Size(min = 3, max = 20) @NotNull String firstName, @Size(min = 3, max = 20) @NotNull String lastName, String password, String passwordConfirmation, @NotNull LocalDate birthDate, String email, @NotNull Boolean isMale, @NotNull Double weight, @NotNull Double height) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -104,27 +101,27 @@ public class UserDTO {
         this.email = email;
     }
 
-    public boolean isMale() {
+    public Boolean isMale() {
         return isMale;
     }
 
-    public void setMale(boolean male) {
+    public void setMale(Boolean male) {
         isMale = male;
     }
 
-    public double getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight( Double weight) {
         this.weight = weight;
     }
 
-    public double getHeight() {
+    public  Double getHeight() {
         return height;
     }
 
-    public void setHeight(double height) {
+    public void setHeight( Double height) {
         this.height = height;
     }
 }

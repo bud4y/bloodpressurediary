@@ -28,14 +28,16 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<?> register(@Valid @RequestBody UserDTO userDTO) {
         if (userService.userNameValidation(userDTO.getUsername())) {
             return new ResponseEntity<>("Username Exists", HttpStatus.CONFLICT);
         } else if (!userService.passwordValidation(userDTO.getPassword(), userDTO.getPasswordConfirmation())) {
             return new ResponseEntity<>("Passwords are not matching", HttpStatus.CONFLICT);
-        } else if (userService.emailValidation(userDTO.getEmail())) {
+        } else if (userService.emailValidationForExistion(userDTO.getEmail())) {
             return new ResponseEntity<>("Email Exists", HttpStatus.CONFLICT);
-        } else {
+        } else if (userService.emailValidationForFormat(userDTO.getEmail())) {
+            return new ResponseEntity<>("Email invalid format", HttpStatus.CONFLICT);
+        }else {
             try {
                 User appUser = userService.createNewUser(userDTO);
                 return new ResponseEntity<>(appUser, HttpStatus.OK);

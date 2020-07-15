@@ -16,12 +16,12 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -31,16 +31,24 @@ public class UserService implements UserDetailsService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+
     public boolean userNameValidation(String userName) {
         List<User> users = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :userName", User.class)
                 .setParameter("userName", userName).getResultList();
         return !users.isEmpty();
     }
 
-    public boolean emailValidation(String email) {
+    public boolean emailValidationForExistion(String email) {
         List<User> emails = entityManager.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class)
                 .setParameter("email", email).getResultList();
         return !emails.isEmpty();
+    }
+
+    public boolean emailValidationForFormat(String email) {
+        String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        return !matcher.matches();
     }
 
     public boolean passwordValidation(String password, String passwordConfirmation) {
@@ -59,8 +67,8 @@ public class UserService implements UserDetailsService {
                 .getSingleResult();
         roles.add(userRole);
         user.setRoles(roles);
-        logger.info(roles+" ez a role");
-        logger.info(user+" service adatok");
+        logger.info(roles + " ez a role");
+        logger.info(user + " service adatok");
         entityManager.persist(user);
         return user;
     }
