@@ -32,7 +32,7 @@ public class UserService implements UserDetailsService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public boolean userNameValidation(String userName) {
-        List<User> users = entityManager.createQuery("SELECT u FROM User u WHERE u.name = :userName", User.class)
+        List<User> users = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :userName", User.class)
                 .setParameter("userName", userName).getResultList();
         return !users.isEmpty();
     }
@@ -59,6 +59,7 @@ public class UserService implements UserDetailsService {
                 .getSingleResult();
         roles.add(userRole);
         user.setRoles(roles);
+        logger.info(roles+" ez a role");
         logger.info(user+" service adatok");
         entityManager.persist(user);
         return user;
