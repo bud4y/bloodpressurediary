@@ -4,9 +4,12 @@ import edu.progmatic.blood_presssure_diary.constants.Roles;
 import edu.progmatic.blood_presssure_diary.dtos.UserDTO;
 import edu.progmatic.blood_presssure_diary.models.registration.Role;
 import edu.progmatic.blood_presssure_diary.models.registration.User;
+import edu.progmatic.blood_presssure_diary.repositories.RoleRepository;
+import edu.progmatic.blood_presssure_diary.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,18 +33,21 @@ public class UserService implements UserDetailsService {
     EntityManager entityManager;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    @Qualifier("userRepository")
+    private UserRepository userRepository;
+
+    @Autowired
+    @Qualifier("roleRepository")
+    private RoleRepository roleRepository;
 
 
     public boolean userNameValidation(String userName) {
-        List<User> users = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :userName", User.class)
-                .setParameter("userName", userName).getResultList();
-        return !users.isEmpty();
+        return userRepository.findByUsername(userName)!=null;
     }
 
     public boolean emailValidationForExistion(String email) {
-        List<User> emails = entityManager.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class)
-                .setParameter("email", email).getResultList();
-        return !emails.isEmpty();
+        return userRepository.findByEmail(email)!=null;
     }
 
     public boolean emailValidationForFormat(String email) {
@@ -58,7 +64,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public User createNewUser(UserDTO userDTO) {
         User user = new User(userDTO.getFirstName(), userDTO.getLastName(), bCryptPasswordEncoder.encode(userDTO.getPassword()),
-                userDTO.getBirthDate(), userDTO.getEmail(), userDTO.isMale(), userDTO.getWeight(), userDTO.getHeight(), 0,
+                userDTO.getBirthDate(), userDTO.getEmail(), userDTO.getIsMale(), userDTO.getWeight(), userDTO.getHeight(), 0,
                 new ArrayList<>(), userDTO.getUsername());
 
         Set<Role> roles = new HashSet<>();
@@ -67,16 +73,12 @@ public class UserService implements UserDetailsService {
                 .getSingleResult();
         roles.add(userRole);
         user.setRoles(roles);
-        logger.info(roles + " ez a role");
-        logger.info(user + " service adatok");
-        entityManager.persist(user);
+        userRepository.save(user);
         return user;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return (UserDetails) entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username")
-                .setParameter("username", username)
-                .getSingleResult();
+        return userRepository.findByUsername(username);
     }
 }

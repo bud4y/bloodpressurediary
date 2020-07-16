@@ -1,6 +1,6 @@
 package edu.progmatic.blood_presssure_diary.models.measurement;
 
-import edu.progmatic.blood_presssure_diary.models.evaluation.Advice;
+import edu.progmatic.blood_presssure_diary.models.evaluation.Evaluate;
 import edu.progmatic.blood_presssure_diary.models.evaluation.WeatherData;
 import edu.progmatic.blood_presssure_diary.models.registration.User;
 
@@ -19,13 +19,13 @@ public class MeasurementDetails {
     private WeatherData wd;
     private LocalDate date;
     @OneToOne
-    private Advice advice;
+    private Evaluate advice;
     @ManyToOne
     private User user;
     public MeasurementDetails() {
     }
 
-    public MeasurementDetails(int systolicValue, int diastolicValue, int pulsePerMin, WeatherData wd, LocalDate date, Advice advice, User user) {
+    public MeasurementDetails(int systolicValue, int diastolicValue, int pulsePerMin, WeatherData wd, LocalDate date, Evaluate advice, User user) {
         this.systolicValue = systolicValue;
         this.diastolicValue = diastolicValue;
         this.pulsePerMin = pulsePerMin;
@@ -83,11 +83,11 @@ public class MeasurementDetails {
         this.user = user;
     }
 
-    public Advice getAdvice() {
+    public Evaluate getAdvice() {
         return advice;
     }
 
-    public void setAdvice(Advice advice) {
+    public void setAdvice(Evaluate advice) {
         this.advice = advice;
     }
 

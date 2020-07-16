@@ -22,17 +22,16 @@ public class WebScrap {
             try {
                 doc = Jsoup.connect("https://sussfelnap.hu/orvosmeteorologia/").userAgent("chrome/83.0").get();
                 Elements temp = doc.select("div.humanmetdaytext");
-                for (Element element : temp) {
-                     data = element.getElementsByTag("div").first().text();
-                    System.out.println(data);
-                }
-                return data;
+
+                return temp.get(0).text();
             } catch (IOException e) {
                 logger.debug("HIBA OKA: "+e.getCause() + " " +e.getStackTrace());
             }
         }
         return data;
     }
+
+
 
     public static void main(String[] args) {
         System.out.println(getDataFromUrl());

@@ -3,18 +3,20 @@ package edu.progmatic.blood_presssure_diary.models.evaluation;
 import javax.persistence.*;
 
 @Entity
-public class Advice {
+public class Evaluate {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Id
     private Long id;
+    private String name;
     private String text;
+
 //    @OneToOne
 //    MeasurementDetails measurementDetails;
-    public Advice(){
+    public Evaluate(){
 
     }
 
-    public Advice(String text) {
+    public Evaluate(String text) {
         this.text = text;
     }
 
@@ -32,5 +34,13 @@ public class Advice {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
