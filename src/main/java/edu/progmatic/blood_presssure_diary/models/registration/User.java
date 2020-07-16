@@ -1,8 +1,9 @@
 package edu.progmatic.blood_presssure_diary.models.registration;
 
-import edu.progmatic.blood_presssure_diary.constants.DateFormats;
 import edu.progmatic.blood_presssure_diary.models.measurement.MeasurementDetails;
-import org.springframework.format.annotation.DateTimeFormat;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,6 +14,9 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class User implements UserDetails {
 
     private String username;
@@ -21,7 +25,7 @@ public class User implements UserDetails {
     private String password;
     private LocalDate birthDate;
     private String email;
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
     private boolean isMale;
@@ -39,10 +43,7 @@ public class User implements UserDetails {
                     name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles;
 
-    public User() {
-    }
-
-    public User(String firstName, String lastName, String password, LocalDate birthDate, String email, boolean isMale, double weight, double height, double BMI, List<MeasurementDetails> measurements,String username) {
+    public User(String firstName, String lastName, String password, LocalDate birthDate, String email, boolean isMale, double weight, double height, double BMI, List<MeasurementDetails> measurements, String username) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
@@ -69,7 +70,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return firstName +" "+lastName;
+        return firstName + " " + lastName;
     }
 
     @Override
@@ -82,9 +83,6 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     @Override
     public boolean isCredentialsNonExpired() {
@@ -94,98 +92,6 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public boolean isMale() {
-        return isMale;
-    }
-
-    public void setMale(boolean male) {
-        isMale = male;
-    }
-
-    public Double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Double weight) {
-        this.weight = weight;
-    }
-
-    public Double getHeight() {
-        return height;
-    }
-
-    public void setHeight(Double height) {
-        this.height = height;
-    }
-
-    public Double getBMI() {
-        return BMI;
-    }
-
-    public void setBMI(Double BMI) {
-        this.BMI = BMI;
-    }
-
-    public List<MeasurementDetails> getMeasurements() {
-        return measurements;
-    }
-
-    public void setMeasurements(List<MeasurementDetails> measurements) {
-        this.measurements = measurements;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
     }
 
     @Override
