@@ -104,5 +104,6 @@ public class UserService implements UserDetailsService{
 //        appUserRepository.save(appUser);
 //        mailSender.send(emailConstructor.constructUpdateUserProfileEmail(appUser));
 //        return appUser;
+        return null;
     }
 }
