@@ -19,15 +19,12 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService implements UserDetailsService{
     Logger logger = LoggerFactory.getLogger(UserService.class);
     @PersistenceContext
     EntityManager entityManager;
@@ -80,5 +77,32 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username);
+    }
+
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public List<User> userList() {
+        return userRepository.findAll();
+    }
+
+    public void updateUserPassword(User user, String newPassword) {
+        String encryptedPassword = bCryptPasswordEncoder.encode(newPassword);
+        user.setPassword(encryptedPassword);
+        userRepository.save(user);
+    }
+
+    public User updateUser(String lastName, String firstName, Double height, Double weight) {
+//        String name = request.get("name");
+//        String email = request.get("email");
+//        String bio = request.get("bio");
+//        appUser.setName(name);
+//        appUser.setEmail(email);
+//        appUser.setBio(bio);
+//        appUserRepository.save(appUser);
+//        mailSender.send(emailConstructor.constructUpdateUserProfileEmail(appUser));
+//        return appUser;
     }
 }
