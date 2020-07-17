@@ -1,7 +1,8 @@
 package edu.progmatic.blood_presssure_diary.services;
 
 import edu.progmatic.blood_presssure_diary.constants.Roles;
-import edu.progmatic.blood_presssure_diary.dtos.UserDTO;
+import edu.progmatic.blood_presssure_diary.dtos.RegistrationDTO;
+import edu.progmatic.blood_presssure_diary.dtos.UpdateExistingUserDTO;
 import edu.progmatic.blood_presssure_diary.models.registration.Role;
 import edu.progmatic.blood_presssure_diary.models.registration.User;
 import edu.progmatic.blood_presssure_diary.repositories.RoleRepository;
@@ -19,12 +20,15 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-public class UserService implements UserDetailsService{
+public class UserService implements UserDetailsService {
     Logger logger = LoggerFactory.getLogger(UserService.class);
     @PersistenceContext
     EntityManager entityManager;
@@ -40,11 +44,11 @@ public class UserService implements UserDetailsService{
 
 
     public boolean userNameValidation(String userName) {
-        return userRepository.findByUsername(userName)!=null;
+        return userRepository.findByUsername(userName) != null;
     }
 
     public boolean emailValidationForExistion(String email) {
-        return userRepository.findByEmail(email)!=null;
+        return userRepository.findByEmail(email) != null;
     }
 
     public boolean emailValidationForFormat(String email) {
@@ -59,10 +63,10 @@ public class UserService implements UserDetailsService{
     }
 
     @Transactional
-    public User createNewUser(UserDTO userDTO) {
-        User user = new User(userDTO.getFirstName(), userDTO.getLastName(), bCryptPasswordEncoder.encode(userDTO.getPassword()),
-                userDTO.getBirthDate(), userDTO.getEmail(), userDTO.getIsMale(), userDTO.getWeight(), userDTO.getHeight(), 0,
-                new ArrayList<>(), userDTO.getUsername());
+    public User createNewUser(RegistrationDTO registrationDTO) {
+        User user = new User(registrationDTO.getFirstName(), registrationDTO.getLastName(), bCryptPasswordEncoder.encode(registrationDTO.getPassword()),
+                registrationDTO.getBirthDate(), registrationDTO.getEmail(), registrationDTO.getIsMale(), registrationDTO.getWeight(), registrationDTO.getHeight(), 0,
+                new ArrayList<>(), registrationDTO.getUsername());
 
         Set<Role> roles = new HashSet<>();
         Role userRole = entityManager.createQuery("SELECT r FROM Role r WHERE r.name  = :roleName", Role.class)
@@ -88,22 +92,31 @@ public class UserService implements UserDetailsService{
         return userRepository.findAll();
     }
 
-    public void updateUserPassword(User user, String newPassword) {
-        String encryptedPassword = bCryptPasswordEncoder.encode(newPassword);
-        user.setPassword(encryptedPassword);
-        userRepository.save(user);
+    public User findById(Integer id) {
+        return userRepository.findUserById(Math.toIntExact(id));
     }
 
-    public User updateUser(String lastName, String firstName, Double height, Double weight) {
-//        String name = request.get("name");
-//        String email = request.get("email");
-//        String bio = request.get("bio");
-//        appUser.setName(name);
-//        appUser.setEmail(email);
-//        appUser.setBio(bio);
-//        appUserRepository.save(appUser);
-//        mailSender.send(emailConstructor.constructUpdateUserProfileEmail(appUser));
-//        return appUser;
-        return null;
+
+    public User updateUser(UpdateExistingUserDTO userUpdateDTO, Integer id) {
+        User user = userRepository.findUserById(id);
+
+        if (!userUpdateDTO.getLastName().equals(user.getLastName())) {
+            user.setLastName(userUpdateDTO.getLastName());
+        }
+        if (!userUpdateDTO.getFirstName().equals(user.getFirstName())) {
+            user.setFirstName(userUpdateDTO.getFirstName());
+        }
+        if (!userUpdateDTO.getHeight().equals(user.getHeight())) {
+            user.setHeight(userUpdateDTO.getHeight());
+        }
+        if (!userUpdateDTO.getWeight().equals(user.getWeight())) {
+            user.setWeight(userUpdateDTO.getWeight());
+        }
+        if (!userUpdateDTO.getPassword().equals(bCryptPasswordEncoder.encode(user.getPassword()))) {
+            String encryptedPassword = bCryptPasswordEncoder.encode(userUpdateDTO.getPassword());
+            user.setPassword(encryptedPassword);
+        }
+        userRepository.save(user);
+        return user;
     }
 }

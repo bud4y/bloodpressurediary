@@ -1,7 +1,5 @@
 package edu.progmatic.blood_presssure_diary.validators.password;
 
-import edu.progmatic.blood_presssure_diary.validators.password.PasswordConstraintValidator;
-
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.Documented;

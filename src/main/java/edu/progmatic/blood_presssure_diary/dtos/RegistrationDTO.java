@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserDTO {
+public class RegistrationDTO {
     @Size(min = 3, max = 20)
     @NotNull
     private String username;
