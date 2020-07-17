@@ -34,6 +34,4 @@ public class UserDTO {
     private Double weight;
     @NotNull
     private Double height;
-
-
 }

@@ -55,7 +55,6 @@ public class User implements UserDetails {
         this.BMI = BMI;
         this.measurements = measurements;
         this.username = username;
-
     }
 
     @Override

@@ -13,16 +13,16 @@ public class WeatherData {
     private double humidity;
     private double temperature;
     private double airPressure;
-    private String frontInfo;
+    private String med_meteorology;
 
     public WeatherData(){
     }
 
-    public WeatherData(double humidity, double temperature, double airPressure, String frontInfo) {
+    public WeatherData(double humidity, double temperature, double airPressure, String med_meteorology) {
         this.humidity = humidity;
         this.temperature = temperature;
         this.airPressure = airPressure;
-        this.frontInfo = frontInfo;
+        this.med_meteorology = med_meteorology;
     }
 
     public double getHumidity() {
@@ -49,12 +49,12 @@ public class WeatherData {
         this.airPressure = airPressure;
     }
 
-    public String getFrontInfo() {
-        return frontInfo;
+    public String getMed_meteorology() {
+        return med_meteorology;
     }
 
-    public void setFrontInfo(String frontInfo) {
-        this.frontInfo = frontInfo;
+    public void setMed_meteorology(String frontInfo) {
+        this.med_meteorology = frontInfo;
     }
 
     public Long getId() {
