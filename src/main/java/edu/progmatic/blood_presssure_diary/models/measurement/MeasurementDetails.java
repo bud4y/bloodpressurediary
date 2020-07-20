@@ -33,8 +33,8 @@ public class MeasurementDetails {
         this.pulsePerMin = pulsePerMin;
         /*this.wd = wd;
         this.date = date;
-        this.evaluate = evaluate;
-        this.user = user;*/
+        this.evaluate = evaluate;*/
+       // this.user = user;
     }
 
     public Long getId() {
