@@ -19,6 +19,8 @@ import java.util.Set;
 @NoArgsConstructor
 public class User implements UserDetails {
 
+    @Lob
+    private byte [] profileImage;
     private String username;
     private String firstName;
     private String lastName;

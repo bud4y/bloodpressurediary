@@ -3,7 +3,6 @@ package edu.progmatic.blood_presssure_diary.controllers;
 import edu.progmatic.blood_presssure_diary.dtos.RegistrationDTO;
 import edu.progmatic.blood_presssure_diary.dtos.UpdateExistingUserDTO;
 import edu.progmatic.blood_presssure_diary.models.registration.User;
-import edu.progmatic.blood_presssure_diary.repositories.ImageRepository;
 import edu.progmatic.blood_presssure_diary.services.UserService;
 import edu.progmatic.blood_presssure_diary.validators.password.PasswordValidatorForUpdate;
 import org.passay.PasswordData;
@@ -16,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 
