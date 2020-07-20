@@ -1,5 +1,7 @@
 package edu.progmatic.blood_presssure_diary.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +19,14 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomGlobalExceptionHandler.class);
+
     // error handle for @Valid
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers,
                                                                   HttpStatus status, WebRequest request) {
+        LOGGER.error("error", ex);
 
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", new Date());

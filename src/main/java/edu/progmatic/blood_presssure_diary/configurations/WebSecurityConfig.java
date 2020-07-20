@@ -10,13 +10,20 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private static final String[] PUBLIC_MATCHERS = {"/user/login", "/user/register", "/measure_details"};
+    private static final String[] PUBLIC_MATCHERS = {"/user/login", "/user/register"};
     @Autowired
     private UserService userService;
     @Bean
@@ -39,7 +46,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().cors().disable().authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll()
+        http.
+                formLogin()
+                .successHandler(new AuthenticationSuccessHandler() {
+                    @Override
+                    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+                        httpServletResponse.setStatus(200);
+
+                    }
+                })
+                .permitAll()
+                .and().
+                csrf().disable().cors().disable().authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll()
         .anyRequest().authenticated()
         ;
     }

@@ -20,7 +20,7 @@ public class MeasurementDetailsController {
         this.measureService = measureService;
     }
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
+   // @PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping("measure_details")
     public ResponseEntity<?> getMeasureDetails(@RequestBody MeasureDTO measureDTO){
         MeasurementDetails measurementDetails = measureService.persistNewMeasure(measureDTO);

@@ -1,5 +1,6 @@
 package edu.progmatic.blood_presssure_diary.models.registration;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.progmatic.blood_presssure_diary.models.measurement.MeasurementDetails;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 public class User implements UserDetails {
-
     private String username;
     private String firstName;
     private String lastName;
@@ -32,7 +32,8 @@ public class User implements UserDetails {
     private Double weight;
     private Double height;
     private Double BMI;
-    @OneToMany
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
     List<MeasurementDetails> measurements;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(

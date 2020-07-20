@@ -26,7 +26,7 @@ public class MeasureService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Object principal = auth.getPrincipal();
         User user = (User) principal;
-        MeasurementDetails measure = new MeasurementDetails(measureDTO.getSystolic(), measureDTO.getDiastolic(), measureDTO.getSystolic());
+        MeasurementDetails measure = new MeasurementDetails(measureDTO.getSystolic(), measureDTO.getDiastolic(), measureDTO.getPulse(), user);
         LocalDateTime now = LocalDateTime.now();
         ZonedDateTime zonedUTC = now.atZone(ZoneId.of("GMT"));
         measure.setDate(zonedUTC);

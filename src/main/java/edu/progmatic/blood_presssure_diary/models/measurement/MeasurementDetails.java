@@ -27,14 +27,14 @@ public class MeasurementDetails {
     public MeasurementDetails() {
     }
 
-    public MeasurementDetails(int systolicValue, int diastolicValue, int pulsePerMin/*, WeatherData wd, LocalDate date, Evaluate evaluate, User user*/ ) {
+    public MeasurementDetails(int systolicValue, int diastolicValue, int pulsePerMin,/*, WeatherData wd, LocalDate date, Evaluate evaluate, */User user ) {
         this.systolicValue = systolicValue;
         this.diastolicValue = diastolicValue;
         this.pulsePerMin = pulsePerMin;
         /*this.wd = wd;
         this.date = date;
         this.evaluate = evaluate;*/
-       // this.user = user;
+        this.user = user;
     }
 
     public Long getId() {
