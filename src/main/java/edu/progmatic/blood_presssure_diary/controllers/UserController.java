@@ -34,6 +34,8 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegistrationDTO registrationDTO) {
+        logger.debug(registrationDTO+" felhasznalo");
+        System.out.println((registrationDTO + " felhasznalo"));
         if (userService.userNameValidation(registrationDTO.getUsername())) {
             return new ResponseEntity<>("Username Exists", HttpStatus.CONFLICT);
         } else if (!userService.passwordValidation(registrationDTO.getPassword(), registrationDTO.getPasswordConfirmation())) {

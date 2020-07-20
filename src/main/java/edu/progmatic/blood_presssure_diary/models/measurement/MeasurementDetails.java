@@ -1,11 +1,13 @@
 package edu.progmatic.blood_presssure_diary.models.measurement;
 
-import edu.progmatic.blood_presssure_diary.models.evaluation.Advice;
+import edu.progmatic.blood_presssure_diary.models.evaluation.Evaluate;
 import edu.progmatic.blood_presssure_diary.models.evaluation.WeatherData;
 import edu.progmatic.blood_presssure_diary.models.registration.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 public class MeasurementDetails {
@@ -17,21 +19,21 @@ public class MeasurementDetails {
     private int pulsePerMin;
     @OneToOne
     private WeatherData wd;
-    private LocalDate date;
+    private ZonedDateTime date;
     @OneToOne
-    private Advice advice;
+    private Evaluate evaluate;
     @ManyToOne
     private User user;
     public MeasurementDetails() {
     }
 
-    public MeasurementDetails(int systolicValue, int diastolicValue, int pulsePerMin, WeatherData wd, LocalDate date, Advice advice, User user) {
+    public MeasurementDetails(int systolicValue, int diastolicValue, int pulsePerMin,/*, WeatherData wd, LocalDate date, Evaluate evaluate, */User user ) {
         this.systolicValue = systolicValue;
         this.diastolicValue = diastolicValue;
         this.pulsePerMin = pulsePerMin;
-        this.wd = wd;
+        /*this.wd = wd;
         this.date = date;
-        this.advice = advice;
+        this.evaluate = evaluate;*/
         this.user = user;
     }
 
@@ -67,11 +69,11 @@ public class MeasurementDetails {
         this.pulsePerMin = pulsePerMin;
     }
 
-    public LocalDate getDate() {
+    public ZonedDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(ZonedDateTime date) {
         this.date = date;
     }
 
@@ -83,12 +85,12 @@ public class MeasurementDetails {
         this.user = user;
     }
 
-    public Advice getAdvice() {
-        return advice;
+    public Evaluate getEvaluate() {
+        return evaluate;
     }
 
-    public void setAdvice(Advice advice) {
-        this.advice = advice;
+    public void setEvaluate(Evaluate advice) {
+        this.evaluate = advice;
     }
 
     public WeatherData getWd() {

@@ -35,5 +35,19 @@ public class RegistrationDTO {
     @NotNull
     private Double height;
 
-
+    @Override
+    public String toString() {
+        return "RegistrationDTO{" +
+                "username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", passwordConfirmation='" + passwordConfirmation + '\'' +
+                ", birthDate=" + birthDate +
+                ", email='" + email + '\'' +
+                ", isMale=" + isMale +
+                ", weight=" + weight +
+                ", height=" + height +
+                '}';
+    }
 }
