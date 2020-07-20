@@ -27,7 +27,7 @@ public class User implements UserDetails {
     private String email;
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long id;
+    private Integer id;
     private boolean isMale;
     private Double weight;
     private Double height;

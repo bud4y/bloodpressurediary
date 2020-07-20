@@ -1,7 +1,8 @@
 package edu.progmatic.blood_presssure_diary.services;
 
 import edu.progmatic.blood_presssure_diary.constants.Roles;
-import edu.progmatic.blood_presssure_diary.dtos.UserDTO;
+import edu.progmatic.blood_presssure_diary.dtos.RegistrationDTO;
+import edu.progmatic.blood_presssure_diary.dtos.UpdateExistingUserDTO;
 import edu.progmatic.blood_presssure_diary.models.registration.Role;
 import edu.progmatic.blood_presssure_diary.models.registration.User;
 import edu.progmatic.blood_presssure_diary.repositories.RoleRepository;
@@ -43,11 +44,11 @@ public class UserService implements UserDetailsService {
 
 
     public boolean userNameValidation(String userName) {
-        return userRepository.findByUsername(userName)!=null;
+        return userRepository.findByUsername(userName) != null;
     }
 
     public boolean emailValidationForExistion(String email) {
-        return userRepository.findByEmail(email)!=null;
+        return userRepository.findByEmail(email) != null;
     }
 
     public boolean emailValidationForFormat(String email) {
@@ -62,10 +63,10 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public User createNewUser(UserDTO userDTO) {
-        User user = new User(userDTO.getFirstName(), userDTO.getLastName(), bCryptPasswordEncoder.encode(userDTO.getPassword()),
-                userDTO.getBirthDate(), userDTO.getEmail(), userDTO.getIsMale(), userDTO.getWeight(), userDTO.getHeight(), 0,
-                new ArrayList<>(), userDTO.getUsername());
+    public User createNewUser(RegistrationDTO registrationDTO) {
+        User user = new User(registrationDTO.getFirstName(), registrationDTO.getLastName(), bCryptPasswordEncoder.encode(registrationDTO.getPassword()),
+                registrationDTO.getBirthDate(), registrationDTO.getEmail(), registrationDTO.getIsMale(), registrationDTO.getWeight(), registrationDTO.getHeight(), 0,
+                new ArrayList<>(), registrationDTO.getUsername());
 
         Set<Role> roles = new HashSet<>();
         Role userRole = entityManager.createQuery("SELECT r FROM Role r WHERE r.name  = :roleName", Role.class)
@@ -80,5 +81,42 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username);
+    }
+
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public List<User> userList() {
+        return userRepository.findAll();
+    }
+
+    public User findById(Integer id) {
+        return userRepository.findUserById(Math.toIntExact(id));
+    }
+
+
+    public User updateUser(UpdateExistingUserDTO userUpdateDTO, Integer id) {
+        User user = userRepository.findUserById(id);
+
+        if (!userUpdateDTO.getLastName().equals(user.getLastName())) {
+            user.setLastName(userUpdateDTO.getLastName());
+        }
+        if (!userUpdateDTO.getFirstName().equals(user.getFirstName())) {
+            user.setFirstName(userUpdateDTO.getFirstName());
+        }
+        if (!userUpdateDTO.getHeight().equals(user.getHeight())) {
+            user.setHeight(userUpdateDTO.getHeight());
+        }
+        if (!userUpdateDTO.getWeight().equals(user.getWeight())) {
+            user.setWeight(userUpdateDTO.getWeight());
+        }
+        if (!userUpdateDTO.getPassword().equals(bCryptPasswordEncoder.encode(user.getPassword()))) {
+            String encryptedPassword = bCryptPasswordEncoder.encode(userUpdateDTO.getPassword());
+            user.setPassword(encryptedPassword);
+        }
+        userRepository.save(user);
+        return user;
     }
 }
