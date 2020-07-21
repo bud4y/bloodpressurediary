@@ -171,7 +171,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <fork>true</fork>
-                    <mainClass>edu.progmatic.blood_presssure_diary</mainClass>
+                    <mainClass>edu.progmatic.blood_presssure_diary.BloodPresssureDiaryApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
