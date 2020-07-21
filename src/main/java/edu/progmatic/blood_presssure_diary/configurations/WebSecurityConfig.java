@@ -23,7 +23,7 @@ import java.io.IOException;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private static final String[] PUBLIC_MATCHERS = {"/listOfTopics","/createMessage","/user/login", "/user/register","/user/**","user/{id}", "/create","/newTopic"};
+    private static final String[] PUBLIC_MATCHERS = {"/favicon.ico","/login","/listOfTopics","/createMessage","/user/login", "/user/register","/user/**","user/{id}", "/create","/newTopic"};
     @Autowired
     private UserService userService;
     @Bean
