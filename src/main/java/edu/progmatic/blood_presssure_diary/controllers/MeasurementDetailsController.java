@@ -1,6 +1,7 @@
 package edu.progmatic.blood_presssure_diary.controllers;
 
 import edu.progmatic.blood_presssure_diary.dtos.MeasureDTO;
+import edu.progmatic.blood_presssure_diary.models.evaluation.BloodPressureValue;
 import edu.progmatic.blood_presssure_diary.models.measurement.MeasurementDetails;
 import edu.progmatic.blood_presssure_diary.services.MeasureService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +17,15 @@ public class MeasurementDetailsController {
     MeasureService measureService;
 
     @Autowired
-    public MeasurementDetailsController(MeasureService measureService){
+    public MeasurementDetailsController(MeasureService measureService) {
         this.measureService = measureService;
     }
 
-   // @PreAuthorize("hasAuthority('ROLE_USER')")
+    // @PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping("measure_details")
-    public ResponseEntity<?> getMeasureDetails(@RequestBody MeasureDTO measureDTO){
+    public ResponseEntity<?> getMeasureDetails(@RequestBody MeasureDTO measureDTO) {
         MeasurementDetails measurementDetails = measureService.persistNewMeasure(measureDTO);
-        return new ResponseEntity<>(measurementDetails, HttpStatus.OK);
+        BloodPressureValue bloodPressureValue = measureService.evaluateMeasurement(measurementDetails);
+        return new ResponseEntity<>(bloodPressureValue, HttpStatus.OK);
     }
 }
