@@ -55,6 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                     }
                 })
+                .defaultSuccessUrl("/home", true)
                 .permitAll()
                 .and().
                 csrf().disable().cors().disable().authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll()
