@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -116,6 +118,15 @@ public class UserService implements UserDetailsService {
             String encryptedPassword = bCryptPasswordEncoder.encode(userUpdateDTO.getPassword());
             user.setPassword(encryptedPassword);
         }
+        userRepository.save(user);
+        return user;
+    }
+
+    public User setProfilePicture(String pictureId){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = auth.getPrincipal();
+        User user = (User) principal;
+        user.setPictureId(pictureId);
         userRepository.save(user);
         return user;
     }

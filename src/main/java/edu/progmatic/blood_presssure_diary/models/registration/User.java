@@ -20,8 +20,6 @@ import java.util.Set;
 @NoArgsConstructor
 public class User implements UserDetails {
 
-    @Lob
-    private byte [] profileImage;
     private String username;
     private String firstName;
     private String lastName;
@@ -46,6 +44,7 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles;
+    private String pictureId;
 
     public User(String firstName, String lastName, String password, LocalDate birthDate, String email, boolean isMale, double weight, double height, double BMI, List<MeasurementDetails> measurements, String username) {
         this.firstName = firstName;
