@@ -7,16 +7,15 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
-@Entity
+
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "pictures")
+@Entity
 public class ProfilePicture {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+    private Integer id;
     private String fileName;
     private String fileType;
     @Lob

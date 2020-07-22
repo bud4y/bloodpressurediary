@@ -122,7 +122,7 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public User setProfilePicture(String pictureId){
+    public User setProfilePicture(Integer pictureId){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Object principal = auth.getPrincipal();
         User user = (User) principal;
