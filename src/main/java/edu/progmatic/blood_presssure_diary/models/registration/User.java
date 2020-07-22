@@ -44,7 +44,7 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles;
-    private String pictureId;
+    private Integer pictureId;
 
     public User(String firstName, String lastName, String password, LocalDate birthDate, String email, boolean isMale, double weight, double height, double BMI, List<MeasurementDetails> measurements, String username) {
         this.firstName = firstName;

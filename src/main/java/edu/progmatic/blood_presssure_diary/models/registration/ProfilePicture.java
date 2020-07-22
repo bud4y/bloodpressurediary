@@ -6,17 +6,17 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Arrays;
 
-@Entity
+
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "pictures")
+@Entity
 public class ProfilePicture {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+    private Integer id;
     private String fileName;
     private String fileType;
     @Lob
@@ -27,5 +27,14 @@ public class ProfilePicture {
         this.fileName = fileName;
         this.fileType = fileType;
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "ProfilePicture{" +
+                "id=" + id +
+                ", fileName='" + fileName + '\'' +
+                ", fileType='" + fileType + '\'' +
+                '}';
     }
 }
