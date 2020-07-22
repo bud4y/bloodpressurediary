@@ -6,6 +6,8 @@ import edu.progmatic.blood_presssure_diary.models.registration.ProfilePicture;
 import edu.progmatic.blood_presssure_diary.models.registration.User;
 import edu.progmatic.blood_presssure_diary.repositories.ProfilePictureRepository;
 import edu.progmatic.blood_presssure_diary.repositories.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +18,7 @@ import java.io.IOException;
 
 @Service
 public class ProfilePictureStorageService {
+    Logger logger = LoggerFactory.getLogger(ProfilePictureStorageService.class);
 
     @Autowired
     private ProfilePictureRepository profilePictureRepository;
@@ -33,13 +36,14 @@ public class ProfilePictureStorageService {
             }
 
             ProfilePicture profilePicture = new ProfilePicture(fileName, file.getContentType(), file.getBytes());
+            profilePictureRepository.save(profilePicture);
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             Object principal = auth.getPrincipal();
             User user = (User) principal;
             user.setPictureId(profilePicture.getId());
             userRepository.save(user);
 
-            return profilePictureRepository.save(profilePicture);
+            return profilePicture;
         } catch (IOException ex) {
             throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
         }

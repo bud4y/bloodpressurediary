@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Arrays;
 
 
 @NoArgsConstructor
@@ -26,5 +27,14 @@ public class ProfilePicture {
         this.fileName = fileName;
         this.fileType = fileType;
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "ProfilePicture{" +
+                "id=" + id +
+                ", fileName='" + fileName + '\'' +
+                ", fileType='" + fileType + '\'' +
+                '}';
     }
 }
