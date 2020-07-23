@@ -2,6 +2,7 @@ package edu.progmatic.blood_presssure_diary.controllers;
 
 import edu.progmatic.blood_presssure_diary.dtos.RegistrationDTO;
 import edu.progmatic.blood_presssure_diary.dtos.UpdateExistingUserDTO;
+import edu.progmatic.blood_presssure_diary.mailsender.MailSender;
 import edu.progmatic.blood_presssure_diary.models.registration.User;
 import edu.progmatic.blood_presssure_diary.services.UserService;
 import edu.progmatic.blood_presssure_diary.validators.password.PasswordValidatorForUpdate;
@@ -24,6 +25,8 @@ public class UserController {
     Logger logger = LoggerFactory.getLogger(UserController.class);
     private UserService userService;
     private PasswordValidatorForUpdate passwordValidatorForUpdate;
+    @Autowired
+    private MailSender mailSender;
 
     @Autowired
     public UserController(UserService userService, PasswordValidatorForUpdate passwordValidatorForUpdate) {
@@ -34,7 +37,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegistrationDTO registrationDTO) {
-        logger.debug(registrationDTO+" felhasznalo");
+        logger.debug(registrationDTO + " felhasznalo");
         System.out.println((registrationDTO + " felhasznalo"));
         if (userService.userNameValidation(registrationDTO.getUsername())) {
             return new ResponseEntity<>("Username Exists", HttpStatus.CONFLICT);
@@ -47,6 +50,7 @@ public class UserController {
         } else {
             try {
                 User appUser = userService.createNewUser(registrationDTO);
+                mailSender.sendEmail(registrationDTO.getEmail());
                 return new ResponseEntity<>(appUser, HttpStatus.OK);
             } catch (Exception e) {
                 return new ResponseEntity<>("An Error Occurred", HttpStatus.BAD_REQUEST);
@@ -55,10 +59,10 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update( @Valid @RequestBody UpdateExistingUserDTO updateUserDTO, @PathVariable Integer id) {
+    public ResponseEntity<?> update(@Valid @RequestBody UpdateExistingUserDTO updateUserDTO, @PathVariable Integer id) {
 
         User user = userService.findById(id);
-        if (updateUserDTO.getPassword() == null && updateUserDTO.getPasswordConfirmation() == null ){
+        if (updateUserDTO.getPassword() == null && updateUserDTO.getPasswordConfirmation() == null) {
             return new ResponseEntity<>("Passwords is incorrect", HttpStatus.CONFLICT);
         }
         if (user == null) {
