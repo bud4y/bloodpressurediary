@@ -6,12 +6,14 @@ import edu.progmatic.blood_presssure_diary.models.evaluation.MedicalMeteorology;
 import edu.progmatic.blood_presssure_diary.models.measurement.MeasurementDetails;
 import edu.progmatic.blood_presssure_diary.services.MeasureService;
 import edu.progmatic.blood_presssure_diary.services.MedicalMeteorologyService;
+import edu.progmatic.blood_presssure_diary.services.PDFGeneratorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,11 +26,14 @@ public class MeasurementDetailsController {
     private Logger log = LoggerFactory.getLogger(this.getClass());
     private MeasureService measureService;
     private MedicalMeteorologyService medicalMeteorologyService;
+    private PDFGeneratorService pdfGeneratorService;
 
     @Autowired
-    public MeasurementDetailsController(MeasureService measureService, MedicalMeteorologyService medicalMeteorologyService) {
+    public MeasurementDetailsController(MeasureService measureService, MedicalMeteorologyService medicalMeteorologyService,
+                                        PDFGeneratorService pdfGeneratorService) {
         this.measureService = measureService;
         this.medicalMeteorologyService = medicalMeteorologyService;
+        this.pdfGeneratorService = pdfGeneratorService;
     }
 
     // @PreAuthorize("hasAuthority('ROLE_USER')")
@@ -45,5 +50,9 @@ public class MeasurementDetailsController {
             result.put("optimalBloodPressureValue", bloodPressureValue);
         }
         return ResponseEntity.ok(result);
+    }
+    @GetMapping("/user/getPDF")
+    public ResponseEntity<?> getPDF(){
+        return new ResponseEntity<>(pdfGeneratorService.generatePDF(), HttpStatus.OK);
     }
 }

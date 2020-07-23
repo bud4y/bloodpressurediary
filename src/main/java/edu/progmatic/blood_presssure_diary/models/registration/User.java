@@ -33,7 +33,7 @@ public class User implements UserDetails {
     private Double weight;
     private Double height;
     private Double BMI;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     @JsonIgnore
     List<MeasurementDetails> measurements;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

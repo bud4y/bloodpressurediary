@@ -3,6 +3,7 @@ package edu.progmatic.blood_presssure_diary.controllers;
 import edu.progmatic.blood_presssure_diary.dtos.RegistrationDTO;
 import edu.progmatic.blood_presssure_diary.dtos.UpdateExistingUserDTO;
 import edu.progmatic.blood_presssure_diary.models.registration.User;
+import edu.progmatic.blood_presssure_diary.services.MeasureService;
 import edu.progmatic.blood_presssure_diary.services.UserService;
 import edu.progmatic.blood_presssure_diary.validators.password.PasswordValidatorForUpdate;
 import org.passay.PasswordData;
@@ -29,13 +30,12 @@ public class UserController {
     public UserController(UserService userService, PasswordValidatorForUpdate passwordValidatorForUpdate) {
         this.userService = userService;
         this.passwordValidatorForUpdate = passwordValidatorForUpdate;
+
     }
 
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegistrationDTO registrationDTO) {
-        logger.debug(registrationDTO+" felhasznalo");
-        System.out.println((registrationDTO + " felhasznalo"));
         if (userService.userNameValidation(registrationDTO.getUsername())) {
             return new ResponseEntity<>("Username Exists", HttpStatus.CONFLICT);
         } else if (!userService.passwordValidation(registrationDTO.getPassword(), registrationDTO.getPasswordConfirmation())) {
