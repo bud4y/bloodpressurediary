@@ -18,7 +18,7 @@ public class MailSender  {
 
     //https://docs.spring.io/spring/docs/5.1.6.RELEASE/spring-framework-reference/integration.html#mail
 
-    @Autowired
+
     private JavaMailSender javaMailSender;
 
 

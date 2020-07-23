@@ -25,7 +25,6 @@ public class UserController {
     Logger logger = LoggerFactory.getLogger(UserController.class);
     private UserService userService;
     private PasswordValidatorForUpdate passwordValidatorForUpdate;
-    @Autowired
     private MailSender mailSender;
 
     @Autowired
