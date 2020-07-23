@@ -6,13 +6,8 @@ import edu.progmatic.blood_presssure_diary.repositories.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
-import java.util.List;
 
 
 @Service
@@ -35,13 +30,4 @@ public class MessageService {
         return messageRepository.save(comment);
     }
 
-//    @Transactional(isolation = Isolation.SERIALIZABLE)
-//    public Message getMessage(Long id) {
-//        return em.find(Message.class, id);
-//    }
-//
-//
-//    public List<Message> getMessageList() {
-//        return em.createQuery("SELECT m FROM Message m", Message.class).getResultList();
-//    }
 }

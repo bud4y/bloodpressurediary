@@ -14,10 +14,8 @@ public class TopicDTO {
 
     @NotNull
     private Long id;
-
     @NotEmpty
     private String topicName;
-
     @NotEmpty
     private String topicText;
 }

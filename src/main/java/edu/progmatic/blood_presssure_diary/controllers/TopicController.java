@@ -2,6 +2,7 @@ package edu.progmatic.blood_presssure_diary.controllers;
 
 import edu.progmatic.blood_presssure_diary.models.forum.Topic;
 import edu.progmatic.blood_presssure_diary.services.TopicService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,8 @@ public class TopicController {
 
     TopicService topicService;
 
+
+    @Autowired
     public TopicController(TopicService topicService) {
         this.topicService = topicService;
     }

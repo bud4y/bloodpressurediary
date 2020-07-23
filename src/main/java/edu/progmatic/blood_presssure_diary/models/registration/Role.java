@@ -16,7 +16,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 public class Role implements GrantedAuthority {
     private String name;
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 

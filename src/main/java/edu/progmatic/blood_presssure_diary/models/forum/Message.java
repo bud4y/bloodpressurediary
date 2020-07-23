@@ -4,11 +4,11 @@ package edu.progmatic.blood_presssure_diary.models.forum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -25,15 +25,6 @@ public class Message implements Serializable {
     public String text;
     public LocalDateTime dateTime;
     boolean isDeleted;
-
     private Long messageTopic;
-
-    public Message(String text, String author, LocalDateTime dateTime, boolean isDeleted, Long messageTopic) {
-        this.text = text;
-        this.author = author;
-        this.dateTime = dateTime;
-        this.isDeleted = isDeleted;
-        this.messageTopic = messageTopic;
-    }
 
 }

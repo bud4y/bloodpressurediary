@@ -3,7 +3,6 @@ package edu.progmatic.blood_presssure_diary.controllers;
 import edu.progmatic.blood_presssure_diary.dtos.RegistrationDTO;
 import edu.progmatic.blood_presssure_diary.dtos.UpdateExistingUserDTO;
 import edu.progmatic.blood_presssure_diary.models.registration.User;
-import edu.progmatic.blood_presssure_diary.services.MeasureService;
 import edu.progmatic.blood_presssure_diary.services.UserService;
 import edu.progmatic.blood_presssure_diary.validators.password.PasswordValidatorForUpdate;
 import org.passay.PasswordData;
@@ -55,10 +54,10 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update( @Valid @RequestBody UpdateExistingUserDTO updateUserDTO, @PathVariable Integer id) {
+    public ResponseEntity<?> update(@Valid @RequestBody UpdateExistingUserDTO updateUserDTO, @PathVariable Integer id) {
 
         User user = userService.findById(id);
-        if (updateUserDTO.getPassword() == null && updateUserDTO.getPasswordConfirmation() == null ){
+        if (updateUserDTO.getPassword() == null && updateUserDTO.getPasswordConfirmation() == null) {
             return new ResponseEntity<>("Passwords is incorrect", HttpStatus.CONFLICT);
         }
         if (user == null) {

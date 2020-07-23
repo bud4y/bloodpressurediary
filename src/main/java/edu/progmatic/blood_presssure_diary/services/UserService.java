@@ -10,7 +10,6 @@ import edu.progmatic.blood_presssure_diary.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,16 +33,16 @@ public class UserService implements UserDetailsService {
     Logger logger = LoggerFactory.getLogger(UserService.class);
     @PersistenceContext
     EntityManager entityManager;
-    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    @Autowired
-    @Qualifier("userRepository")
     private UserRepository userRepository;
-
-    @Autowired
-    @Qualifier("roleRepository")
     private RoleRepository roleRepository;
 
+    @Autowired
+    public UserService(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository, RoleRepository roleRepository) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+    }
 
     public boolean userNameValidation(String userName) {
         return userRepository.findByUsername(userName) != null;
@@ -122,7 +121,7 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public User setProfilePicture(Integer pictureId){
+    public User setProfilePicture(Integer pictureId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Object principal = auth.getPrincipal();
         User user = (User) principal;

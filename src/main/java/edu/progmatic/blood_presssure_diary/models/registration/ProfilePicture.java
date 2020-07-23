@@ -3,10 +3,7 @@ package edu.progmatic.blood_presssure_diary.models.registration;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
-import java.util.Arrays;
 
 
 @NoArgsConstructor
@@ -21,7 +18,6 @@ public class ProfilePicture {
     private String fileType;
     @Lob
     private byte[] data;
-
 
     public ProfilePicture(String fileName, String fileType, byte[] data) {
         this.fileName = fileName;

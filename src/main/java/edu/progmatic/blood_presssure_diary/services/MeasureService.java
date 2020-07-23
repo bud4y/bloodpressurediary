@@ -1,19 +1,12 @@
 package edu.progmatic.blood_presssure_diary.services;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
 import edu.progmatic.blood_presssure_diary.dtos.MeasureDTO;
 import edu.progmatic.blood_presssure_diary.models.evaluation.BloodPressureValue;
-import edu.progmatic.blood_presssure_diary.models.evaluation.Evaluate;
-import edu.progmatic.blood_presssure_diary.models.evaluation.MedicalMeteorology;
 import edu.progmatic.blood_presssure_diary.models.measurement.MeasurementDetails;
 import edu.progmatic.blood_presssure_diary.models.registration.User;
 import edu.progmatic.blood_presssure_diary.repositories.BloodPressureValueRepository;
 import edu.progmatic.blood_presssure_diary.repositories.MeasureRepository;
 import edu.progmatic.blood_presssure_diary.repositories.UserRepository;
-import edu.progmatic.blood_presssure_diary.webscrap.WebScrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +15,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.time.*;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @Service
 public class MeasureService {
@@ -52,7 +45,6 @@ public class MeasureService {
         LocalDateTime now = LocalDateTime.now();
         ZonedDateTime zonedUTC = now.atZone(ZoneId.of("GMT"));
         measure.setDate(zonedUTC);
-        user.getMeasurements().add(measure);
         return measureRepository.save(measure);
     }
 
@@ -61,7 +53,6 @@ public class MeasureService {
         int systolicValue = measurementDetails.getSystolicValue();
         int diastolicValue = measurementDetails.getDiastolicValue();
         int userAge = Math.abs(user.getBirthDate().getYear() - LocalDate.now().getYear());
-        log.debug(userAge + " kor");
 
         BloodPressureValue byAge = bloodPressureValueRepository.findByAge(userAge);
         return byAge;

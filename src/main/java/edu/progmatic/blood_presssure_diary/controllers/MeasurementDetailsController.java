@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +22,7 @@ import java.util.Map;
 
 @RestController
 public class MeasurementDetailsController {
-    private Logger log = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private MeasureService measureService;
     private MedicalMeteorologyService medicalMeteorologyService;
     private PDFGeneratorService pdfGeneratorService;
@@ -36,9 +35,8 @@ public class MeasurementDetailsController {
         this.pdfGeneratorService = pdfGeneratorService;
     }
 
-    // @PreAuthorize("hasAuthority('ROLE_USER')")
-    @PostMapping("measure_details")
-    public ResponseEntity<Map<String, Object>> responseForMeasureDetails(@RequestBody MeasureDTO measureDTO) {
+    @PostMapping("/measurementDetails")
+    public ResponseEntity<Map<String, Object>> createNewMeasurement(@RequestBody MeasureDTO measureDTO) {
         Map<String, Object> result = new HashMap<String, Object>();
         MeasurementDetails measurementDetails = measureService.persistNewMeasure(measureDTO);
 
@@ -51,8 +49,9 @@ public class MeasurementDetailsController {
         }
         return ResponseEntity.ok(result);
     }
+
     @GetMapping("/user/getPDF")
-    public ResponseEntity<?> getPDF(){
+    public ResponseEntity<?> getPDF() {
         return new ResponseEntity<>(pdfGeneratorService.generatePDF(), HttpStatus.OK);
     }
 }

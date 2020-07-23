@@ -33,7 +33,7 @@ public class User implements UserDetails {
     private Double weight;
     private Double height;
     private Double BMI;
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @JsonIgnore
     List<MeasurementDetails> measurements;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -97,22 +97,4 @@ public class User implements UserDetails {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", password='" + password + '\'' +
-                ", birthDate=" + birthDate +
-                ", email='" + email + '\'' +
-                ", id=" + id +
-                ", isMale=" + isMale +
-                ", weight=" + weight +
-                ", height=" + height +
-                ", BMI=" + BMI +
-                ", measurements=" + measurements +
-                ", roles=" + roles +
-                '}';
-    }
 }

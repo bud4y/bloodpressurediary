@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -39,7 +40,8 @@ public class PDFGeneratorService {
     public List<MeasurementDetails> generatePDF() {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateFormats.DATE_TIME_FORMAT);
-            String fileName = "C:\\Users\\Csaba\\IdeaProjects\\blood_pressure_diary\\chillyfacts_test.pdf";
+            String fileName = "C:\\Users\\Csaba\\IdeaProjects\\SpringGuru\\Vernyomas_Backend_Repo\\src\\main\\" +
+                    "resources\\static\\pdf\\bp_diary.pdf";
             Document document = new Document();
             PdfWriter.getInstance(document, new FileOutputStream(fileName));
 
@@ -48,7 +50,8 @@ public class PDFGeneratorService {
             User user = (User) principal;
 
             document.open();
-            Paragraph paragraph = new Paragraph(user.getLastName()+" "+user.getFirstName()+" vérnyomás eredményei");
+
+            Paragraph paragraph = new Paragraph(user.getLastName() + " " + user.getFirstName() + " vérnyomás eredményei");
             document.add(paragraph);
             PdfPTable table = new PdfPTable(4);
             PdfPCell c1 = new PdfPCell(new Phrase("Dátum"));
@@ -62,26 +65,23 @@ public class PDFGeneratorService {
 
             c1 = new PdfPCell(new Phrase("Pulzus"));
             table.addCell(c1);
-            logger.info(user.getMeasurements()+" lista");
-            logger.info(user.getMeasurements().get(0).getDate()+" datum");
             table.setHeaderRows(1);
-            for (int i = 0; i <user.getMeasurements().size() ; i++) {
-                table.addCell(user.getMeasurements().get(i).getDate().format(formatter));
-                table.addCell(user.getMeasurements().get(i).getSystolicValue()+"");
-                table.addCell(user.getMeasurements().get(i).getDiastolicValue()+"");
-                table.addCell(user.getMeasurements().get(i).getPulsePerMin()+"");
+            List<MeasurementDetails> measurements = measureRepository.findMeasurementDetailsById(user.getId());
+            for (int i = 0; i < measurements.size(); i++) {
+                table.addCell(measurements.get(i).getDate().format(formatter));
+                table.addCell(measurements.get(i).getSystolicValue() + "");
+                table.addCell(measurements.get(i).getDiastolicValue() + "");
+                table.addCell(measurements.get(i).getPulsePerMin() + "");
             }
-
 
             document.add(table);
             document.close();
-            System.out.println("pdf created");
-            return user.getMeasurements();
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            System.out.println(e);
+            logger.info("pdf created");
+            return measurements;
+        } catch (DocumentException | IOException e) {
+            logger.info(e+"");
         }
         return null;
     }
+
 }

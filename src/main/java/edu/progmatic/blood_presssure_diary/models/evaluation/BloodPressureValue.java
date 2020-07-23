@@ -1,11 +1,13 @@
 package edu.progmatic.blood_presssure_diary.models.evaluation;
 
-import edu.progmatic.blood_presssure_diary.models.measurement.MeasurementDetails;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 @Getter
@@ -21,23 +23,4 @@ public class BloodPressureValue {
     private String minValue;
     private String maxValue;
 
-    public BloodPressureValue(int minAge, int maxAge, String properValue, String minValue, String maxValue) {
-        this.minAge = minAge;
-        this.maxAge = maxAge;
-        this.properValue = properValue;
-        this.minValue = minValue;
-        this.maxValue = maxValue;
-    }
-
-    @Override
-    public String toString() {
-        return "BloodPressureValue{" +
-                "id=" + id +
-                ", minAge=" + minAge +
-                ", maxAge=" + maxAge +
-                ", properValue='" + properValue + '\'' +
-                ", minValue='" + minValue + '\'' +
-                ", maxValue='" + maxValue + '\'' +
-                '}';
-    }
 }

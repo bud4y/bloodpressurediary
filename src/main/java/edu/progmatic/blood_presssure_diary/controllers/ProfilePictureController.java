@@ -16,7 +16,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.zip.DataFormatException;
-import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
 
@@ -24,12 +23,18 @@ import java.util.zip.Inflater;
 @RequestMapping("/user")
 public class ProfilePictureController {
     private Logger logger = LoggerFactory.getLogger(ProfilePictureController.class);
-    @Autowired
     private ProfilePictureStorageService profilePictureStorageService;
-    @Autowired
     private ProfilePictureRepository profilePictureRepository;
-    @Autowired
     private UserService userService;
+
+
+    @Autowired
+    public ProfilePictureController(ProfilePictureStorageService profilePictureStorageService,
+                                    ProfilePictureRepository profilePictureRepository, UserService userService) {
+        this.profilePictureStorageService = profilePictureStorageService;
+        this.profilePictureRepository = profilePictureRepository;
+        this.userService = userService;
+    }
 
     @PostMapping("/uploadFile")
     public Response uploadFile(@RequestParam("file") MultipartFile file) {
