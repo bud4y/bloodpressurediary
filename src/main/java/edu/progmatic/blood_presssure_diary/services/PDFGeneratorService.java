@@ -19,7 +19,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
@@ -79,7 +78,7 @@ public class PDFGeneratorService {
             logger.info("pdf created");
             return measurements;
         } catch (DocumentException | IOException e) {
-            logger.info(e+"");
+            logger.info(e + "");
         }
         return null;
     }
