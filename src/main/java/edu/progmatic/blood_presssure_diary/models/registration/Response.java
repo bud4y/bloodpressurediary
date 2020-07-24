@@ -1,12 +1,10 @@
 package edu.progmatic.blood_presssure_diary.models.registration;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class Response {
     private String fileName;
     private String fileDownloadUri;

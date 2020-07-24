@@ -29,11 +29,27 @@ public class RegistrationDTO {
     @NotNull
     private LocalDate birthDate;
     private String email;
-    @NotNull
-    private  Boolean isMale;
+    private @NotNull Boolean isMale;
     @NotNull
     private Double weight;
     @NotNull
     private Double height;
+    private String activation;
+    private Boolean enabled;
 
+    @Override
+    public String toString() {
+        return "RegistrationDTO{" +
+                "username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", passwordConfirmation='" + passwordConfirmation + '\'' +
+                ", birthDate=" + birthDate +
+                ", email='" + email + '\'' +
+                ", isMale=" + isMale +
+                ", weight=" + weight +
+                ", height=" + height +
+                '}';
+    }
 }

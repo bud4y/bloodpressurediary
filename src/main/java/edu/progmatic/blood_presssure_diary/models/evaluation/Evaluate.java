@@ -1,15 +1,8 @@
 package edu.progmatic.blood_presssure_diary.models.evaluation;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 
 @Entity
-@Setter
-@Getter
-@NoArgsConstructor
 public class Evaluate {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Id
@@ -17,4 +10,37 @@ public class Evaluate {
     private String name;
     private String text;
 
+//    @OneToOne
+//    MeasurementDetails measurementDetails;
+    public Evaluate(){
+
+    }
+
+    public Evaluate(String text) {
+        this.text = text;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

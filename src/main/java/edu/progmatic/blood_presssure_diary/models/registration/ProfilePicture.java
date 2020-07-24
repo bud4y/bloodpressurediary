@@ -3,34 +3,29 @@ package edu.progmatic.blood_presssure_diary.models.registration;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
-
+@Entity
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
+@Table(name = "pictures")
 public class ProfilePicture {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Integer id;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String id;
     private String fileName;
     private String fileType;
     @Lob
     private byte[] data;
 
+
     public ProfilePicture(String fileName, String fileType, byte[] data) {
         this.fileName = fileName;
         this.fileType = fileType;
         this.data = data;
-    }
-
-    @Override
-    public String toString() {
-        return "ProfilePicture{" +
-                "id=" + id +
-                ", fileName='" + fileName + '\'' +
-                ", fileType='" + fileType + '\'' +
-                '}';
     }
 }

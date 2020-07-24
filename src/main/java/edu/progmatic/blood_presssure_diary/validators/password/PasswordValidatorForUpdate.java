@@ -1,11 +1,19 @@
 package edu.progmatic.blood_presssure_diary.validators.password;
 
-import lombok.Getter;
-import org.passay.*;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.Getter;
+import lombok.Setter;
+import org.passay.CharacterRule;
+import org.passay.EnglishCharacterData;
+import org.passay.LengthRule;
+import org.passay.PasswordData;
+import org.passay.PasswordValidator;
+import org.passay.Rule;
+import org.passay.RuleResult;
+import org.passay.WhitespaceRule;
+import org.springframework.stereotype.Service;
 
 @Getter
 @Service

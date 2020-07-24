@@ -7,17 +7,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
 @Repository("userRepository")
 public interface UserRepository extends JpaRepository<User, Integer> {
     User findByUsername(String username);
-
     User findByEmail(String email);
-
     @Query("SElECT user FROM  User user WHERE user.id=:id")
-    User findUserById(@Param(value = "id") Integer id);
-
+    User findUserById(@Param(value = "id")Integer id);
     List<User> findByUsernameContaining(String username);
 
+
+    User findByActivation(String code);
 
 }

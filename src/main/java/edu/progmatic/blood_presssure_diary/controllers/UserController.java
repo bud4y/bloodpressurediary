@@ -2,8 +2,9 @@ package edu.progmatic.blood_presssure_diary.controllers;
 
 import edu.progmatic.blood_presssure_diary.dtos.RegistrationDTO;
 import edu.progmatic.blood_presssure_diary.dtos.UpdateExistingUserDTO;
+import edu.progmatic.blood_presssure_diary.services.EmailService;
 import edu.progmatic.blood_presssure_diary.models.registration.User;
-import edu.progmatic.blood_presssure_diary.services.UserService;
+import edu.progmatic.blood_presssure_diary.services.UserServiceImpl;
 import edu.progmatic.blood_presssure_diary.validators.password.PasswordValidatorForUpdate;
 import org.passay.PasswordData;
 import org.passay.PasswordValidator;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 
@@ -22,30 +24,39 @@ import javax.validation.Valid;
 @RequestMapping("/user")
 public class UserController {
     Logger logger = LoggerFactory.getLogger(UserController.class);
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
     private PasswordValidatorForUpdate passwordValidatorForUpdate;
+    private EmailService emailService;
 
     @Autowired
-    public UserController(UserService userService, PasswordValidatorForUpdate passwordValidatorForUpdate) {
-        this.userService = userService;
-        this.passwordValidatorForUpdate = passwordValidatorForUpdate;
+    public void setEmailService(EmailService emailService) {
+        this.emailService = emailService;
+    }
 
+    @Autowired
+    public UserController(UserServiceImpl userServiceImpl, PasswordValidatorForUpdate passwordValidatorForUpdate) {
+        this.userServiceImpl = userServiceImpl;
+        this.passwordValidatorForUpdate = passwordValidatorForUpdate;
     }
 
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegistrationDTO registrationDTO) {
-        if (userService.userNameValidation(registrationDTO.getUsername())) {
+        logger.debug(registrationDTO + " felhasznalo");
+        System.out.println((registrationDTO + " felhasznalo"));
+        if (userServiceImpl.userNameValidation(registrationDTO.getUsername())) {
             return new ResponseEntity<>("Username Exists", HttpStatus.CONFLICT);
-        } else if (!userService.passwordValidation(registrationDTO.getPassword(), registrationDTO.getPasswordConfirmation())) {
+        } else if (!userServiceImpl.passwordValidation(registrationDTO.getPassword(), registrationDTO.getPasswordConfirmation())) {
             return new ResponseEntity<>("Passwords are not matching", HttpStatus.CONFLICT);
-        } else if (userService.emailValidationForExistion(registrationDTO.getEmail())) {
+        } else if (userServiceImpl.emailValidationForExistion(registrationDTO.getEmail())) {
             return new ResponseEntity<>("Email Exists", HttpStatus.CONFLICT);
-        } else if (userService.emailValidationForFormat(registrationDTO.getEmail())) {
+        } else if (userServiceImpl.emailValidationForFormat(registrationDTO.getEmail())) {
             return new ResponseEntity<>("Email invalid format", HttpStatus.CONFLICT);
         } else {
             try {
-                User appUser = userService.createNewUser(registrationDTO);
+                emailService.sendMessage(registrationDTO.getEmail(),registrationDTO.getUsername());
+                User appUser = userServiceImpl.registerUser(registrationDTO);
+
                 return new ResponseEntity<>(appUser, HttpStatus.OK);
             } catch (Exception e) {
                 return new ResponseEntity<>("An Error Occurred", HttpStatus.BAD_REQUEST);
@@ -56,14 +67,14 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@Valid @RequestBody UpdateExistingUserDTO updateUserDTO, @PathVariable Integer id) {
 
-        User user = userService.findById(id);
+        User user = userServiceImpl.findById(id);
         if (updateUserDTO.getPassword() == null && updateUserDTO.getPasswordConfirmation() == null) {
             return new ResponseEntity<>("Passwords is incorrect", HttpStatus.CONFLICT);
         }
         if (user == null) {
             return new ResponseEntity<>("User Not Found", HttpStatus.NOT_FOUND);
         }
-        if (!userService.passwordValidation(updateUserDTO.getPassword(),
+        if (!userServiceImpl.passwordValidation(updateUserDTO.getPassword(),
                 updateUserDTO.getPasswordConfirmation())) {
             return new ResponseEntity<>("Passwords are not matching", HttpStatus.CONFLICT);
         }
@@ -74,7 +85,7 @@ public class UserController {
             return new ResponseEntity<>("Password is invalid", HttpStatus.NOT_FOUND);
         } else {
             try {
-                userService.updateUser(updateUserDTO, id);
+                userServiceImpl.updateUser(updateUserDTO, id);
                 return new ResponseEntity<>(user, HttpStatus.OK);
             } catch (Exception e) {
                 return new ResponseEntity<>("An Error Occurred", HttpStatus.BAD_REQUEST);
@@ -82,5 +93,9 @@ public class UserController {
         }
     }
 
-
+    @RequestMapping(path = "/activation/{code}", method = RequestMethod.GET)
+    public String activation(@PathVariable("code") String code, HttpServletResponse response) {
+        String result = userServiceImpl.userActivation(code);
+        return "auth/login";
+    }
 }

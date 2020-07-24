@@ -18,5 +18,15 @@ public class UpdateExistingUserDTO {
     private Double weight;
     private Double height;
 
-
+    @Override
+    public String toString() {
+        return "UpdateExistingUserDTO{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", passwordConfirmation='" + passwordConfirmation + '\'' +
+                ", weight=" + weight +
+                ", height=" + height +
+                '}';
+    }
 }

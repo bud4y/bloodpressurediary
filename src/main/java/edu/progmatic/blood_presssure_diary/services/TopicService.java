@@ -5,6 +5,7 @@ import edu.progmatic.blood_presssure_diary.repositories.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,6 +25,6 @@ public class TopicService {
 
 
     public List<Topic> listAllTopics() {
-        return topicRepository.findAll();
+        return  topicRepository.findAll();
     }
 }

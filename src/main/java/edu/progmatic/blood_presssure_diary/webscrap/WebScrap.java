@@ -2,16 +2,18 @@ package edu.progmatic.blood_presssure_diary.webscrap;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 @Configuration
 public class WebScrap {
-    public String getMedicalMeteorologyDataFromUrl() {
+    public static String getDataFromUrl() {
         Logger logger = LoggerFactory.getLogger(WebScrap.class);
         Document doc;
         String data = "";
@@ -26,5 +28,10 @@ public class WebScrap {
         }
         return data;
     }
+
+    public static void main(String[] args) {
+        System.out.println(getDataFromUrl());
+    }
+
 }
 

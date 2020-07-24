@@ -2,17 +2,22 @@ package edu.progmatic.blood_presssure_diary.controllers;
 
 import edu.progmatic.blood_presssure_diary.dtos.MessageDTO;
 import edu.progmatic.blood_presssure_diary.models.forum.Message;
+import edu.progmatic.blood_presssure_diary.models.forum.Topic;
 import edu.progmatic.blood_presssure_diary.services.MessageService;
 import edu.progmatic.blood_presssure_diary.services.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 
 @RestController
 public class MessageController {
+    @Autowired
     private final MessageService messageService;
+    @Autowired
     private final TopicService topicService;
 
     @Autowired
