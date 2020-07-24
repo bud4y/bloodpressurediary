@@ -41,7 +41,7 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody RegistrationDTO registrationDTO) {
+    public ResponseEntity<?> register( @RequestBody RegistrationDTO registrationDTO) {
         logger.debug(registrationDTO + " felhasznalo");
         System.out.println((registrationDTO + " felhasznalo"));
         if (userServiceImpl.userNameValidation(registrationDTO.getUsername())) {
