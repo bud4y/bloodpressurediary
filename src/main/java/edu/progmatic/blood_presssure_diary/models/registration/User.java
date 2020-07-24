@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -45,6 +46,8 @@ public class User implements UserDetails {
                     name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles;
     private String pictureId;
+    private String activation;
+    private Boolean enabled;
 
     public User(String firstName, String lastName, String password, LocalDate birthDate, String email, boolean isMale, double weight, double height, double BMI, List<MeasurementDetails> measurements, String username) {
         this.firstName = firstName;
@@ -95,6 +98,12 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void addRoles(String roleName) {
+        if (this.roles == null || this.roles.isEmpty())
+            this.roles = new HashSet<>();
+        this.roles.add(new Role(roleName));
     }
 
     @Override

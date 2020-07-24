@@ -34,6 +34,8 @@ public class RegistrationDTO {
     private Double weight;
     @NotNull
     private Double height;
+    private String activation;
+    private Boolean enabled;
 
     @Override
     public String toString() {
