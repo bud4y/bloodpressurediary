@@ -28,8 +28,9 @@ public class RegistrationDTO {
     private String passwordConfirmation;
     @NotNull
     private LocalDate birthDate;
+    @NotNull
     private String email;
-    private @NotNull Boolean isMale;
+    private  Boolean isMale;
     @NotNull
     private Double weight;
     @NotNull
