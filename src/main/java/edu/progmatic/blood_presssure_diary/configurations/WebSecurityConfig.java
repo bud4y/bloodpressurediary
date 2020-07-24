@@ -28,7 +28,7 @@ import java.util.Arrays;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private static final String[] PUBLIC_MATCHERS = {"/css/*", "/js/*", "/images/*","/favicon.ico","/login","/listOfTopics","/createMessage","/user/login", "/user/register","/user/**","user/{id}", "/create","/newTopic"};
+   // private static final String[] PUBLIC_MATCHERS = {"/css/*", "/js/*", "/images/*","/favicon.ico","/login","/listOfTopics","/createMessage","/user/login", "/user/register","/user/**","user/{id}", "/create","/newTopic"};
     @Autowired
     private UserServiceImpl userServiceImpl;
 
@@ -67,9 +67,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     }
                 })
                 .and()
-                .csrf().disable().authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/**","/css/*", "/js/*", "/images/*","/favicon.ico","/login","/listOfTopics","/createMessage","/user/login", "/user/register","/user/**","user/{id}", "/create","/newTopic")
+                .csrf().disable().authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS,"/**","/css/*", "/js/*", "/images/*","/favicon.ico","/login","/listOfTopics","/createMessage","/user/login", "/user/register","/user/**","user/{id}", "/create","/newTopic")
                 .permitAll()
-        .anyRequest().authenticated()
+//        .anyRequest().authenticated()
         ;
     }
 
@@ -77,13 +78,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
-
         configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         return source;
     }
 }
