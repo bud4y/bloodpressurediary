@@ -80,12 +80,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByEmail(username);
-        if (user == null) {
-            throw new UsernameNotFoundException(username);
-        }
-
-        return new UserDetailsImpl(user);
+//        User user = findByEmail(username);
+//        if (user == null) {
+//            throw new UsernameNotFoundException(username);
+//        }
+//
+//        return new UserDetailsImpl(user);
+        return userRepository.findByUsername(username);
     }
 
 
@@ -108,7 +109,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setEnabled(false);
         user.setActivation(generateKey());
         userRepository.save(user);
-
 
         return user;
     }

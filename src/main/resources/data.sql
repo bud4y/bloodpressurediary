@@ -7,5 +7,5 @@ INSERT INTO `bloodpressure`.`evaluate` (name, text) VALUES ('Elsőfokú magas v�
 INSERT INTO `bloodpressure`.`evaluate` (name, text) VALUES ('Másodfokú magas vérnyomás.', 'Másodfokú');
 INSERT INTO `bloodpressure`.`evaluate` (name, text) VALUES ('Harmadfokú magas vérnyomás.', 'Harmadfokú');
 # INSERT INTO `bloodpressure`.`weather_data` (`id`, `air_pressure`, `med_meteorology`, `humidity`, `temperature`) VALUES (1, 20.0, 'nincs front', 20.0, 25.0);
-# INSERT INTO role (name) values ('ROLE_USER');
+INSERT INTO role (name) values ('ROLE_USER');
 

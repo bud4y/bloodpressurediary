@@ -54,9 +54,9 @@ public class UserController {
             return new ResponseEntity<>("Email invalid format", HttpStatus.CONFLICT);
         } else {
             try {
-                emailService.sendMessage(registrationDTO.getEmail(),registrationDTO.getUsername());
-                User appUser = userServiceImpl.registerUser(registrationDTO);
 
+                User appUser = userServiceImpl.registerUser(registrationDTO);
+                emailService.sendMessage(registrationDTO.getEmail(),registrationDTO.getUsername(),appUser.getActivation());
                 return new ResponseEntity<>(appUser, HttpStatus.OK);
             } catch (Exception e) {
                 return new ResponseEntity<>("An Error Occurred", HttpStatus.BAD_REQUEST);
@@ -95,7 +95,7 @@ public class UserController {
 
     @RequestMapping(path = "/activation/{code}", method = RequestMethod.GET)
     public String activation(@PathVariable("code") String code, HttpServletResponse response) {
-        String result = userServiceImpl.userActivation(code);
-        return "auth/login";
+         userServiceImpl.userActivation(code);
+        return  "Sikeres Aktiváció!!!";
     }
 }
