@@ -15,15 +15,4 @@ public class BloodPresssureDiaryApplication {
     public static void main(String[] args) {
         SpringApplication.run(BloodPresssureDiaryApplication.class, args);
     }
-
-//    public void sendEmail(String email) {
-//        System.out.println("Sending Email...");
-//        SimpleMailMessage msg = new SimpleMailMessage();
-//        msg.setTo(email, "toth.csaba.szeged@gmail.com", "budaibence@yahoo.com");
-//        msg.setSubject("Testing Bloodperssure from Spring Boot");
-//        msg.setText("Hello World \n Spring Boot Email");
-//
-//        javaMailSender.send(msg);
-//
-//    }
 }

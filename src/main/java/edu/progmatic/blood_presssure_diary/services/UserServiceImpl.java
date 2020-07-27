@@ -62,30 +62,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return passwordConfirmation.equals(password);
     }
 
-    /*@Transactional
-    public User createNewUser(RegistrationDTO registrationDTO) {
-        User user = new User(registrationDTO.getFirstName(), registrationDTO.getLastName(), bCryptPasswordEncoder.encode(registrationDTO.getPassword()),
-                registrationDTO.getBirthDate(), registrationDTO.getEmail(), registrationDTO.getIsMale(), registrationDTO.getWeight(), registrationDTO.getHeight(), 0,
-                new ArrayList<>(), registrationDTO.getUsername());
-
-        Set<Role> roles = new HashSet<>();
-        Role userRole = entityManager.createQuery("SELECT r FROM Role r WHERE r.name  = :roleName", Role.class)
-                .setParameter("roleName", Roles.ROLE_USER)
-                .getSingleResult();
-        roles.add(userRole);
-        user.setRoles(roles);
-        userRepository.save(user);
-        return user;
-    }*/
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        User user = findByEmail(username);
-//        if (user == null) {
-//            throw new UsernameNotFoundException(username);
-//        }
-//
-//        return new UserDetailsImpl(user);
         return userRepository.findByUsername(username);
     }
 
