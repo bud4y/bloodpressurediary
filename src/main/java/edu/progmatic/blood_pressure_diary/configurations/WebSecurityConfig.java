@@ -28,7 +28,6 @@ import java.util.Arrays;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    // private static final String[] PUBLIC_MATCHERS = {"/css/*", "/js/*", "/images/*","/favicon.ico","/login","/listOfTopics","/createMessage","/user/login", "/user/register","/user/**","user/{id}", "/create","/newTopic"};
     @Autowired
     private UserServiceImpl userServiceImpl;
 
@@ -51,36 +50,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProvider());
     }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .formLogin()
-////                .defaultSuccessUrl("/home", true)
-////                .and()
-////                .logout()
-////                .logoutUrl("/logout")
-////                .logoutSuccessUrl("/user/login")
-////                .and()
-//                .successHandler(new AuthenticationSuccessHandler() {
-//                    @Override
-//                    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
-//                                                        HttpServletResponse httpServletResponse,
-//                                                        Authentication authentication) throws IOException, ServletException {
-//                        httpServletResponse.setStatus(200);
-//
-//                    }
-//                })
-//                .and()
-//                .cors()
-//                .and()
-//                .csrf().disable()
-//                .authorizeRequests()
-//                .antMatchers(HttpMethod.OPTIONS, "/**", "/css/*", "/js/*", "/images/*", "/favicon.ico","/login" ,"/user/login", "/user/register")
-//                .permitAll()
-//                .anyRequest().authenticated()
-//        ;
-//    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.
@@ -95,7 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().
                 csrf().disable()
                 .cors().and()
-                .authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**", "/css/*", "/js/*", "/images/*", "/favicon.ico", "/login", "/user/login", "/user/register", "/conditions").permitAll();
+                .authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**","/measure_details", "/css/*", "/js/*", "/images/*", "/favicon.ico", "/login", "/user/login", "/user/register", "/conditions").permitAll();
 
     }
 
