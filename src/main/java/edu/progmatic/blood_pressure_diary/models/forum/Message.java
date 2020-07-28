@@ -1,14 +1,11 @@
-package edu.progmatic.blood_presssure_diary.models.forum;
+package edu.progmatic.blood_pressure_diary.models.forum;
 
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
