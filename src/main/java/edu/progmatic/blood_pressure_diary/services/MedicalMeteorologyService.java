@@ -12,8 +12,8 @@ import java.time.ZonedDateTime;
 
 @Service
 public class MedicalMeteorologyService {
-    private  MedicalMeteorologyRepository medicalMeteorologyRepository;
-    private  WebScrap webScrap;
+    private MedicalMeteorologyRepository medicalMeteorologyRepository;
+    private WebScrap webScrap;
 
     @Autowired
     public MedicalMeteorologyService(MedicalMeteorologyRepository medicalMeteorologyRepository, WebScrap webScrap) {

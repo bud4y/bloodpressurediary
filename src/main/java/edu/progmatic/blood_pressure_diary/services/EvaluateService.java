@@ -7,6 +7,8 @@ import edu.progmatic.blood_pressure_diary.models.measurement.MeasurementDetails;
 import edu.progmatic.blood_pressure_diary.models.registration.User;
 import edu.progmatic.blood_pressure_diary.repositories.BloodPressureValueRepository;
 import edu.progmatic.blood_pressure_diary.repositories.EvaluateRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +16,9 @@ import java.time.LocalDate;
 
 @Service
 public class EvaluateService {
-    private  BloodPressureValueRepository bloodPressureValueRepository;
-    private  EvaluateRepository evaluateRepository;
+    private static final Logger log = LoggerFactory.getLogger(EvaluateService.class);
+    private BloodPressureValueRepository bloodPressureValueRepository;
+    private EvaluateRepository evaluateRepository;
 
     @Autowired
     public EvaluateService(BloodPressureValueRepository bloodPressureValueRepository, EvaluateRepository evaluateRepository) {
@@ -27,7 +30,8 @@ public class EvaluateService {
         User user = measurementDetails.getUser();
         int userAge = Math.abs(user.getBirthDate().getYear() - LocalDate.now().getYear());
 
-        return bloodPressureValueRepository.findByAge(userAge);
+        BloodPressureValue byAge = bloodPressureValueRepository.findByAge(userAge);
+        return byAge;
     }
 
     public Evaluate evaluateMeasurement(MeasureDTO measurementDetails) {
@@ -52,4 +56,5 @@ public class EvaluateService {
             return evaluateRepository.findHypertensionStageThree();
         }
     }
+
 }
