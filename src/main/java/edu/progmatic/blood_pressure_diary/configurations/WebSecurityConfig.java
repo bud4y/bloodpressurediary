@@ -57,13 +57,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.
                 formLogin()
                 .loginPage("/login")
-                .failureHandler(new AuthenticationFailureHandler() {
-                    @Override
-                    public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-                        httpServletResponse.setStatus(403);
-                        httpServletResponse.getWriter().write("{\"response\": \"fail\"}");
-                    }
-                })
+//                .failureHandler(new AuthenticationFailureHandler() {
+//                    @Override
+//                    public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+//                        httpServletResponse.setStatus(403);
+//                        httpServletResponse.getWriter().write("{\"response\": \"fail\"}");
+//                    }
+//                })
                 .successHandler(new AuthenticationSuccessHandler() {
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
