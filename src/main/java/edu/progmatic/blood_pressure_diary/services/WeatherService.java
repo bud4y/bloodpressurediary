@@ -21,7 +21,11 @@ public class WeatherService {
 
     public WeatherData persistDailyWeatherData(){
         Map<String, Object> data = weather.getData();
-        WeatherData weatherData = new WeatherData(data.get("humidity").toString(), data.get("temp").toString(), data.get("pressure").toString());
+        String temp = data.get("temp").toString();
+        Double d = Double.parseDouble(temp);
+        d = (d-32)/1.8;
+        String result = String.format("%.2f", d);
+        WeatherData weatherData = new WeatherData(data.get("humidity").toString(), result, data.get("pressure").toString());
         return weatherRepository.save(weatherData);
     }
 }

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-@CrossOrigin(origins = "*",allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 //@RequestMapping("/user")
 public class UserController {
@@ -45,7 +45,7 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<?> register( @RequestBody RegistrationDTO registrationDTO) {
+    public ResponseEntity<?> register(@RequestBody RegistrationDTO registrationDTO) {
         logger.debug(registrationDTO + " felhasznalo");
         System.out.println((registrationDTO + " felhasznalo"));
         if (userServiceImpl.userNameValidation(registrationDTO.getUsername())) {
@@ -60,7 +60,7 @@ public class UserController {
             try {
 
                 User appUser = userServiceImpl.registerUser(registrationDTO);
-                emailService.sendMessage(registrationDTO.getEmail(),registrationDTO.getUsername(),appUser.getActivation());
+                emailService.sendMessage(registrationDTO.getEmail(), registrationDTO.getUsername(), appUser.getActivation());
                 return new ResponseEntity<>(appUser, HttpStatus.OK);
             } catch (Exception e) {
                 return new ResponseEntity<>("An Error Occurred", HttpStatus.BAD_REQUEST);
@@ -99,28 +99,29 @@ public class UserController {
 
     @RequestMapping(path = "/user/activation/{code}", method = RequestMethod.GET)
     public String activation(@PathVariable("code") String code, HttpServletResponse response) {
-         userServiceImpl.userActivation(code);
-        return  "Sikeres Aktiváció!!!";
+        userServiceImpl.userActivation(code);
+        return "Sikeres Aktiváció!!!";
     }
 
-//    @PostMapping("/login")
-//    String login(
-//            @RequestParam("username") final String username,
-//            @RequestParam("password") final String password) {
-//        return authentication
-//                .login(username, password)
-//                .orElseThrow(() -> new RuntimeException("invalid login and/or password"));
-//    }
 
     @PostMapping("/login")
-    //@CrossOrigin(origins = "http://localhost:4200")
-    public User loginUser(@RequestBody RegistrationDTO registrationDTO) throws Exception{
+    @CrossOrigin(origins = "http://localhost:4200")
+    public User loginUser(@RequestBody RegistrationDTO registrationDTO) throws Exception {
         String username = registrationDTO.getUsername();
         String password = registrationDTO.getPassword();
         User obj = null;
-        if(username != null && password != null){
+        if (username != null && password != null) {
             obj = userServiceImpl.fetchUserByUsernameAndPassword(username, password);
         }
         return obj;
+    }
+
+    @GetMapping("/login_user")
+    public ResponseEntity<?> isUserLoggedIn() {
+        if (userServiceImpl.isAuthenticated()) {
+            return new ResponseEntity<>("User logged in", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Unauthenticated user", HttpStatus.FORBIDDEN);
+        }
     }
 }

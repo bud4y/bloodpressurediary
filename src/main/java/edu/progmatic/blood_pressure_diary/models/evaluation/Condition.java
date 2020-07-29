@@ -18,7 +18,7 @@ public class Condition {
     private Long id;
     @Column(name = "condition_column")
     private String condition;
-    @OneToMany
+    @OneToMany(mappedBy = "condition")
     @JsonIgnore
     List<MeasurementDetails> measurementDetails;
 
