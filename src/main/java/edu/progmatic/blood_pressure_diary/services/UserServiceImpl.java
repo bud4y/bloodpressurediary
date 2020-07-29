@@ -68,6 +68,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
 
+
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -159,5 +160,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setPictureId(pictureId);
         userRepository.save(user);
         return user;
+    }
+
+    public User fetchUserByUsernameAndPassword(String username, String password) {
+        return userRepository.findByUsernameAndPassword(username, password);
     }
 }

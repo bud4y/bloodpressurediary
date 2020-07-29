@@ -103,12 +103,24 @@ public class UserController {
         return  "Sikeres Aktiváció!!!";
     }
 
+//    @PostMapping("/login")
+//    String login(
+//            @RequestParam("username") final String username,
+//            @RequestParam("password") final String password) {
+//        return authentication
+//                .login(username, password)
+//                .orElseThrow(() -> new RuntimeException("invalid login and/or password"));
+//    }
+
     @PostMapping("/login")
-    String login(
-            @RequestParam("username") final String username,
-            @RequestParam("password") final String password) {
-        return authentication
-                .login(username, password)
-                .orElseThrow(() -> new RuntimeException("invalid login and/or password"));
+    //@CrossOrigin(origins = "http://localhost:4200")
+    public User loginUser(@RequestBody RegistrationDTO registrationDTO) throws Exception{
+        String username = registrationDTO.getUsername();
+        String password = registrationDTO.getPassword();
+        User obj = null;
+        if(username != null && password != null){
+            obj = userServiceImpl.fetchUserByUsernameAndPassword(username, password);
+        }
+        return obj;
     }
 }
