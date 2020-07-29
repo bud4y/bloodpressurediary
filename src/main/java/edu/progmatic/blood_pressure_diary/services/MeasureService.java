@@ -8,13 +8,10 @@ import edu.progmatic.blood_pressure_diary.models.evaluation.WeatherData;
 import edu.progmatic.blood_pressure_diary.models.measurement.MeasurementDetails;
 import edu.progmatic.blood_pressure_diary.models.registration.User;
 import edu.progmatic.blood_pressure_diary.repositories.MeasureRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -22,7 +19,6 @@ import java.time.ZonedDateTime;
 
 @Service
 public class MeasureService {
-    Logger log = LoggerFactory.getLogger(MeasureService.class);
     private MeasureRepository measureRepository;
 
     private MedicalMeteorologyService medicalMeteorologyService;
@@ -47,5 +43,4 @@ public class MeasureService {
         measure.getMedicalMeteorology().setId(medicalMeteorology.getId());
         return measureRepository.save(measure);
     }
-
 }

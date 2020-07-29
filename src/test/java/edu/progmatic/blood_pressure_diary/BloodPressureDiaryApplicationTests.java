@@ -1,10 +1,10 @@
-package edu.progmatic.blood_presssure_diary;
+package edu.progmatic.blood_pressure_diary;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BloodPresssureDiaryApplicationTests {
+class BloodPressureDiaryApplicationTests {
 
     @Test
     void contextLoads() {
