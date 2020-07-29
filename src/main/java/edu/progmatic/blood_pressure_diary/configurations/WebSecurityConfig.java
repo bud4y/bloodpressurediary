@@ -57,6 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.
                 formLogin()
                 .loginPage("/login")
+                //
 //                .failureHandler(new AuthenticationFailureHandler() {
 //                    @Override
 //                    public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
