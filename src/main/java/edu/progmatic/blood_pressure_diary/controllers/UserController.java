@@ -2,6 +2,7 @@ package edu.progmatic.blood_pressure_diary.controllers;
 
 import edu.progmatic.blood_pressure_diary.dtos.RegistrationDTO;
 import edu.progmatic.blood_pressure_diary.dtos.UpdateExistingUserDTO;
+import edu.progmatic.blood_pressure_diary.models.registration.UserAuthenticationService;
 import edu.progmatic.blood_pressure_diary.services.EmailService;
 import edu.progmatic.blood_pressure_diary.models.registration.User;
 import edu.progmatic.blood_pressure_diary.services.UserServiceImpl;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,9 +23,11 @@ import javax.validation.Valid;
 
 @CrossOrigin(origins = "*",allowedHeaders = "*")
 @RestController
-@RequestMapping("/user")
+//@RequestMapping("/user")
 public class UserController {
     Logger logger = LoggerFactory.getLogger(UserController.class);
+    @NonNull
+    UserAuthenticationService authentication;
     private UserServiceImpl userServiceImpl;
     private PasswordValidatorForUpdate passwordValidatorForUpdate;
     private EmailService emailService;
@@ -93,14 +97,18 @@ public class UserController {
         }
     }
 
-    @RequestMapping(path = "/activation/{code}", method = RequestMethod.GET)
+    @RequestMapping(path = "/user/activation/{code}", method = RequestMethod.GET)
     public String activation(@PathVariable("code") String code, HttpServletResponse response) {
          userServiceImpl.userActivation(code);
         return  "Sikeres Aktiváció!!!";
     }
-//
-//    @GetMapping("/login")
-//    public String showLogin() {
-//        return "login";
-//    }
+
+    @PostMapping("/login")
+    String login(
+            @RequestParam("username") final String username,
+            @RequestParam("password") final String password) {
+        return authentication
+                .login(username, password)
+                .orElseThrow(() -> new RuntimeException("invalid login and/or password"));
+    }
 }
