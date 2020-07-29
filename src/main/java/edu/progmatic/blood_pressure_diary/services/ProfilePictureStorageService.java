@@ -7,24 +7,28 @@ import edu.progmatic.blood_pressure_diary.models.registration.User;
 import edu.progmatic.blood_pressure_diary.repositories.ProfilePictureRepository;
 import edu.progmatic.blood_pressure_diary.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.util.Objects;
 
 @Service
 public class ProfilePictureStorageService {
 
     @Autowired
     private ProfilePictureRepository profilePictureRepository;
+
+    @Qualifier("userRepository")
     @Autowired
     private UserRepository userRepository;
 
     public ProfilePicture storeFile(MultipartFile file) {
         // Normalize file name
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
         try {
             // Check if the file's name contains invalid characters
