@@ -12,7 +12,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -54,6 +56,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.
                 formLogin()
+                .failureHandler(new AuthenticationFailureHandler() {
+                    @Override
+                    public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+                        httpServletResponse.setStatus(403);
+                        httpServletResponse.getWriter().write("{\"response\": \"fail\"}");
+                    }
+                })
                 .successHandler(new AuthenticationSuccessHandler() {
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
@@ -61,11 +70,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     }
                 })
                 .permitAll()
-                .and().
-                csrf().disable()
+                .and()
+                .csrf().disable()
                 .cors().and()
                 .authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**", "/css/*", "/js/*", "/images/*", "/favicon.ico", "/login", "/user/login", "/user/register", "/conditions").permitAll();
-
     }
 
     @Bean

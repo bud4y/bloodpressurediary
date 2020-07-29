@@ -98,4 +98,9 @@ public class UserController {
          userServiceImpl.userActivation(code);
         return  "Sikeres Aktiváció!!!";
     }
+//
+//    @GetMapping("/login")
+//    public String showLogin() {
+//        return "login";
+//    }
 }
