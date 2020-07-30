@@ -69,12 +69,12 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}")
-    public User getUserById(@PathVariable Integer id){
+    public User getUserById(@PathVariable Long id){
         return userServiceImpl.findById(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@Valid @RequestBody UpdateExistingUserDTO updateUserDTO, @PathVariable Integer id) {
+    public ResponseEntity<?> update(@Valid @RequestBody UpdateExistingUserDTO updateUserDTO, @PathVariable Long id) {
 
         User user = userServiceImpl.findById(id);
         if (updateUserDTO.getPassword() == null && updateUserDTO.getPasswordConfirmation() == null) {

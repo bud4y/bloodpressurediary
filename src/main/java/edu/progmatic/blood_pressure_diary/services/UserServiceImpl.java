@@ -122,8 +122,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.findAll();
     }
 
-    public User findById(Integer id) {
-        return userRepository.findUserById(Math.toIntExact(id));
+    public User findById(Long id) {
+        return userRepository.findUserById(id);
     }
 
     public List<User> findAllUser() {
@@ -131,7 +131,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
 
-    public User updateUser(UpdateExistingUserDTO userUpdateDTO, Integer id) {
+    public User updateUser(UpdateExistingUserDTO userUpdateDTO, Long id) {
         User user = userRepository.findUserById(id);
 
         if (!userUpdateDTO.getLastName().equals(user.getLastName())) {
