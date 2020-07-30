@@ -53,4 +53,5 @@ public class RegistrationDTO {
                 ", height=" + height +
                 '}';
     }
+    //
 }
