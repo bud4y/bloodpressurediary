@@ -68,6 +68,11 @@ public class UserController {
         }
     }
 
+    @GetMapping("/user/{id}")
+    public User getUserById(@PathVariable Integer id){
+        return userServiceImpl.findById(id);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@Valid @RequestBody UpdateExistingUserDTO updateUserDTO, @PathVariable Integer id) {
 
@@ -98,9 +103,10 @@ public class UserController {
     }
 
     @RequestMapping(path = "/user/activation/{code}", method = RequestMethod.GET)
-    public String activation(@PathVariable("code") String code, HttpServletResponse response) {
+    public ResponseEntity<?> activation(@PathVariable("code") String code, HttpServletResponse response) {
         userServiceImpl.userActivation(code);
-        return "Sikeres Aktiváció!!!";
+        return new ResponseEntity<>("Account activated", HttpStatus.ACCEPTED);
+
     }
 
 
