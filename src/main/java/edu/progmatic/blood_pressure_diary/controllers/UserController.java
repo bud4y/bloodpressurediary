@@ -103,9 +103,9 @@ public class UserController {
     }
 
     @RequestMapping(path = "/user/activation/{code}", method = RequestMethod.GET)
-    public ResponseEntity<?> activation(@PathVariable("code") String code, HttpServletResponse response) {
+    public String activation(@PathVariable("code") String code, HttpServletResponse response) {
         userServiceImpl.userActivation(code);
-        return new ResponseEntity<>("Account activated", HttpStatus.ACCEPTED);
+        return "redirect:http://localhost:4200/#/emailconfirm";
 
     }
 
