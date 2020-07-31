@@ -106,7 +106,7 @@ public class UserController {
     @RequestMapping(path = "/user/activation/{code}", method = RequestMethod.GET)
     public void activation(@PathVariable("code") String code, HttpServletResponse response) throws IOException {
         userServiceImpl.userActivation(code);
-         response.sendRedirect("redirect:http://localhost:4200/#/emailconfirm");
+         response.sendRedirect("http://localhost:4200/#/emailconfirm");
     }
 
 
