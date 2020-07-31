@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -103,10 +104,9 @@ public class UserController {
     }
 
     @RequestMapping(path = "/user/activation/{code}", method = RequestMethod.GET)
-    public String activation(@PathVariable("code") String code, HttpServletResponse response) {
+    public void activation(@PathVariable("code") String code, HttpServletResponse response) throws IOException {
         userServiceImpl.userActivation(code);
-        return "redirect:http://localhost:4200/#/emailconfirm";
-
+         response.sendRedirect("redirect:http://localhost:4200/#/emailconfirm");
     }
 
 
