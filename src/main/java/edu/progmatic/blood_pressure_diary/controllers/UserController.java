@@ -125,9 +125,9 @@ public class UserController {
     @GetMapping("/login_user")
     public ResponseEntity<?> isUserLoggedIn() {
         if (userServiceImpl.isAuthenticated()) {
-            return new ResponseEntity<>("User logged in", HttpStatus.OK);
+            return new ResponseEntity<>(true, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Unauthenticated user", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(false, HttpStatus.FORBIDDEN);
         }
     }
 }
