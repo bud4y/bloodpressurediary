@@ -199,7 +199,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <fork>true</fork>
-                    <mainClass>edu.progmatic.bpdiary.BloodPressureDiaryApplication</mainClass>
+                    <mainClass>com.progmatic.bpdiary.BloodPressureDiaryApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
